@@ -46,11 +46,11 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'Xuyuanp/nerdtree-git-plugin'
 
 " deoplete completion framework
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
+" Plug 'Shougo/neosnippet.vim'
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" 
+" Plug 'Shougo/neosnippet.vim'
+" Plug 'Shougo/neosnippet-snippets'
 
 " git
 Plug 'rhysd/conflict-marker.vim'
@@ -64,48 +64,48 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'kassio/neoterm'
 
 Plug 'elzr/vim-json'
-Plug 'fatih/vim-go', { 'tag': '*' }
+" Plug 'fatih/vim-go', { 'tag': '*' }
 
 " lsp
 " TODO transfor to nvim-lsp in the future
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
+" Plug 'autozimu/LanguageClient-neovim', {
+"     \ 'branch': 'next',
+"     \ 'do': 'bash install.sh',
+"     \ }
 
-Plug 'junegunn/fzf'
+" Plug 'junegunn/fzf'
 
 Plug 'sheerun/vim-polyglot'
 
 call plug#end()
 
-" set colors
-if has('vcon')
-    set termguicolors
-endif
-
-colorscheme slate
-
-" don't give |ins-completion-menu| messages.
-set shortmess+=c
-
-" enable deoplete
-let g:deoplete#enable_at_startup = 1
-call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' })
-
-let g:go_fmt_command = 'goimports'
-let g:go_metalinter_autosave_enabled = ['revive']
-
-"Setup language client
-let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rls'],
-    \ }
-
-set formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
-
-nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+" " set colors
+" if has('vcon')
+"     set termguicolors
+" endif
+" 
+" colorscheme slate
+" 
+" " don't give |ins-completion-menu| messages.
+" set shortmess+=c
+" 
+" " enable deoplete
+" let g:deoplete#enable_at_startup = 1
+" call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' })
+" 
+" let g:go_fmt_command = 'goimports'
+" let g:go_metalinter_autosave_enabled = ['revive']
+" 
+" "Setup language client
+" let g:LanguageClient_serverCommands = {
+"     \ 'rust': ['rls'],
+"     \ }
+" 
+" set formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
+" 
+" nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+" nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+" nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 
 
 " CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
