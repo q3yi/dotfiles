@@ -2,9 +2,9 @@
 
 set proxy_interface 'Wi-Fi'
 set proxy_listen_addr '127.0.0.1'
-set proxy_web_port 1081
-set proxy_sock_port 1082
-set proxy_bypass_addrs 192.168.0.0/16 10.0.0.0/8 172.16.0.0/12 100.64.0.0/10 localhost '*.local'
+set proxy_web_port 7890
+set proxy_sock_port 7890
+set proxy_bypass_addrs 192.168.0.0/16 10.0.0.0/8 172.16.0.0/12 127.0.0.1 localhost '*.local' timestamp.apple.com
 
 function switchSystemProxy -a state
 	networksetup -setwebproxystate $proxy_interface $state
