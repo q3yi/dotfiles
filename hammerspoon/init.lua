@@ -183,58 +183,55 @@ hs.fnutils.each({
     {key = "Right", fn = resizeWin.right},
     {key = "Up", fn = resizeWin.top},
     {key = "Down", fn = resizeWin.bottom},
-    {key = "u", fn = resizeWin.full}
+    {key = "f", fn = resizeWin.full}
 }, function(meta)
     hs.hotkey.bind(winModifier, meta.key, meta.fn)
 end)
 
 
 -- quick switch app
-local appSwitchModifier = {"alt"}
+-- local appSwitchModifier = {"alt"}
 
-hs.fnutils.each({
-    {key = "1", app = "2Do"},
-    {key = "2", app = "Firefox"},
-    {key = "3", app = "Visual Studio Code"},
-    {key = "4", app = "iTerm"},
-    {key = "5", app = "DevDocs"},
-    {key = "6", app = "ForkLift"},
-    {key = "7", app = "Postman"},
-    {key = "0", app = "Spotify"},
-}, function(meta)
-    hs.hotkey.bind(appSwitchModifier, meta.key, function()
-        hs.application.launchOrFocus(meta.app)
-    end)
-end)
+-- hs.fnutils.each({
+--     {key = "1", app = "Firefox"},
+--     {key = "2", app = "iTerm"},
+--     {key = "3", app = "Emacs"},
+--     {key = "4", app = "ForkLift"}
+-- }, function(meta)
+--     hs.hotkey.bind(appSwitchModifier, meta.key, function()
+--         hs.application.launchOrFocus(meta.app)
+--     end)
+-- end)
 
-local function Chinese()
+local function setToChineseInputMethod()
     hs.keycodes.currentSourceID("com.apple.inputmethod.SCIM.ITABC")
 end
 
-local function English()
+local function setToDvorakInputMethod()
     hs.keycodes.currentSourceID("com.apple.keylayout.Dvorak")
 end
 
-local function set_app_input_method(app_name, set_input_method_function, event)
+local function addAppInputMethodHook(appName, setInputMethodFunc, event)
     event = event or hs.window.filter.windowFocused
 
-    hs.window.filter.new(app_name):subscribe(event, function()
-        set_input_method_function()
+    hs.window.filter.new(appName):subscribe(event, function()
+        setInputMethodFunc()
     end)
 end
 
-set_app_input_method('Code', English)
-set_app_input_method('iTerm2', English)
-set_app_input_method('2Do', English)
-set_app_input_method('Slack', Chinese)
-set_app_input_method('WeChat', Chinese)
-set_app_input_method('Microsoft Word', Chinese)
-set_app_input_method('Firefox', English)
+-- Automatic change input method base on current App focused
+hs.fnutils.each({
+      {app = "Emacs", func = setToDvorakInputMethod},
+      {app = "Code", func = setToDvorakInputMethod},
+      {app = "iTerm2", func = setToDvorakInputMethod},
+      {app = "Firefox", func = setToDvorakInputMethod},
 
---   set_app_input_method('Hammerspoon', English, hs.window.filter.windowCreated)
---   set_app_input_method('Spotlight', English, hs.window.filter.windowCreated)
---   set_app_input_method('Alfred', English, hs.window.filter.windowCreated)
---   set_app_input_method('Google Chrome', English)
+      {app = "WeChat", func = setToChineseInputMethod}
+}, function (config)
+      hs.window.filter.new(config.app):subscribe(
+	 hs.window.filter.windowFocused,
+	 function() config.func() end)
+end)
 
 -- Find source id with shortcuts
 -- hs.hotkey.bind({'ctrl', 'cmd'}, ".", function()
@@ -260,9 +257,9 @@ function reloadConfig(files)
     end
 end
 
-myWatcher = hs.pathwatcher.new(
-    os.getenv("HOME") .. "/.hammerspoon/",
-    reloadConfig
-):start()
+-- configWatcher = hs.pathwatcher.new(
+--     os.getenv("HOME") .. "/.hammerspoon/",
+--     reloadConfig
+-- ):start()
 
-hs.alert.show("Config loaded")
+hs.alert.show("Hammerspoon config loaded")
