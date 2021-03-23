@@ -5,193 +5,122 @@ function sendNotification(title, text)
 end
 
 -- Resizing windows
-function initWindowsManager()
+function setupWindowsManager()
 
    hs.grid.MARGINX = 0
    hs.grid.MARGINY = 0
    hs.grid.GRIDWIDTH = 12
    hs.grid.GRIDHEIGHT = 12
 
-   local winModifier = {"ctrl", "alt"}
-
-   local verticalLayout = {
-      {0, 0, 4, 12},
-      {0, 0, 6, 12},
-      {0, 0, 8, 12},
-      {8, 0, 8, 12},
-      {6, 0, 6, 12},
-      {4, 0, 4, 12}
+   local layout = {
+      title='',
+      x=0,
+      y=0,
+      w=2, -- max:12, 2 stand for (2 * 3) / 12
+      h=2, -- max:2 2 stand for screen max height
    }
 
-   local horizontalLayout = {
-      {0, 0, 12, 4},
-      {0, 0, 12, 6},
-      {0, 0, 12, 8},
-      {0, 4, 12, 8},
-      {0, 6, 12, 6},
-      {0, 8, 12, 4}
-   }
+   function clearLayout()
+      layout.title = ''
+      layout.x = 0
+      layout.y = 0
+      layout.w = 2
+      layout.h = 2
+   end
 
-   local resizeWin = (function()
-	 local leftWidth = 2
-	 local rightWidth = 2
-	 local topHeight = 2
-	 local bottomHeight = 2
-	 local preWds = ''
+   function left()
+      local win = hs.window.focusedWindow()
+      local f = win:frame()
+      local screen = win:screen()
+      local max = screen:frame()
+      local title = win:title()
 
-	 local function left()
-	    -- clear vertical align
-	    topHeight, bottomHeight = 2, 2
+      if title == layout.title then
+	 layout.w = layout.w % 3 + 1
+      else
+	 clearLayout()
+	 layout.title = title
+      end
+      
+      f.x, f.w = max.x, (max.w * layout.w * 3 / 12)
+      f.y, f.h = max.y + layout.y * max.h / 2, layout.h * max.h / 2
+  
+      win:setFrame(f, 0)
+   end
 
-	    local win = hs.window.focusedWindow()
-	    local f = win:frame()
-	    local screen = win:screen()
-	    local max = screen:frame()
-	    local title = win:title()
+   function right()
+      local win = hs.window.focusedWindow()
+      local f = win:frame()
+      local screen = win:screen()
+      local max = screen:frame()
+      local title = win:title()
 
-	    f.x = max.x
-	    f.y = max.y
-	    f.h = max.h
-	    if title == preWds then
-	       leftWidth = (leftWidth) % 3 + 1
-	    else
-	       leftWidth = 4 - rightWidth
-	    end
+      if title == layout.title then
+	 layout.x = layout.x % 3 + 1
+	 layout.w = 4 - layout.x
+      else
+	 clearLayout()
+	 layout.x = 2
+	 layout.w = 2
+	 layout.title = title
+      end
 
-	    if leftWidth == 1 then
-	       f.w = max.w / 3
-	    elseif leftWidth == 2 then
-	       f.w = max.w / 2
-	    else
-	       f.w = max.w / 3 * 2
-	    end
+      f.x, f.w = max.x + 3 * layout.x * max.w / 12, max.w * layout.w * 3 / 12
+      f.y, f.h = max.y + layout.y * max.h / 2, layout.h * max.h / 2
 
-	    preWds = title
-	    win:setFrame(f, 0)
-	 end
+      win:setFrame(f, 0)
+   end
 
-	 local function right()
-	    -- clear vertical align
-	    topHeight, bottomHeight = 2, 2
+   function topOrFull()
+      local win = hs.window.focusedWindow()
+      local f = win:frame()
+      local screen = win:screen()
+      local max = screen:frame()
+      local title = win:title()
 
-	    local win = hs.window.focusedWindow()
-	    local f = win:frame()
-	    local screen = win:screen()
-	    local max = screen:frame()
-	    local title = win:title()
+      if title == layout.title then
+	 layout.x, layout.y, layout.w, layout.h = 0, 0, 4, layout.h % 2 + 1
+      else
+	 layout.x, layout.y, layout.h, layout.w = 0, 0, 2, 4
+	 layout.title = title
+      end
 
-	    f.y = max.y
-	    f.h = max.h
-	    if title == preWds then
-	       rightWidth = (rightWidth) % 3 + 1
-	    else
-	       rightWidth = 4 - leftWidth
-	    end
+      if layout.h == 2 then
+	 
+	 layout.w = 4
+	 win:maximize(0)
+      else
+	 f.y, f.h = max.y, layout.h * max.h / 2
+	 f.x, f.w = max.x, max.w
+	 
+	 win:setFrame(f, 0)
+      end
+   end
 
-	    if rightWidth == 1 then
-	       f.w = max.w / 3
-	       f.x = max.x + (max.w / 3 * 2)
-	    elseif rightWidth == 2 then
-	       f.w = max.w / 2
-	       f.x = max.x + (max.w / 2)
-	    else
-	       f.w = max.w / 3 * 2
-	       f.x = max.x + (max.w / 3)
-	    end
+   function bottom()
+      local win = hs.window.focusedWindow()
+      local f = win:frame()
+      local screen = win:screen()
+      local max = screen:frame()
+      local title = win:title()
 
-	    preWds = title
-	    win:setFrame(f, 0)
+      layout.title = title
+      layout.x, layout.y, layout.h, layout.w = 0, 1, 1, 4
 
-	 end
+      f.y, f.h = max.y + max.h / 2, max.h / 2
+      f.x, f.w = max.x, max.w
+	 
+      win:setFrame(f, 0)
+   end
 
-	 local function top()
-	    -- clear horizontal align
-	    --leftWidth, rightWidth = 2, 2
-
-	    local win = hs.window.focusedWindow()
-	    local f = win:frame()
-	    local screen = win:screen()
-	    local max = screen:frame()
-	    local title = win:title()
-
-	    f.y = max.y
-	    f.x = max.x
-	    f.w = max.w
-	    if title == preWds then
-	       topHeight = (topHeight) % 3 + 1
-	    else
-	       topHeight = 4 - bottomHeight
-	    end
-
-	    if topHeight == 1 then
-	       f.h = max.h / 3
-	    elseif topHeight == 2 then
-	       f.h = max.h / 2
-	    else
-	       f.h = max.h / 3 * 2
-	    end
-
-	    preWds = title
-	    win:setFrame(f, 0)
-	 end
-
-	 local function bottom()
-	    -- clear horizontal align
-	    leftWidth, rightWidth = 2, 2
-
-	    local win = hs.window.focusedWindow()
-	    local f = win:frame()
-	    local screen = win:screen()
-	    local max = screen:frame()
-	    local title = win:title()
-
-	    f.x = max.x
-	    f.w = max.w
-	    if title == preWds then
-	       bottomHeight = (bottomHeight) % 3 + 1
-	    else
-	       bottomHeight = 4 - topHeight
-	    end
-
-	    if bottomHeight == 1 then
-	       f.h = max.h / 3
-	       f.y = max.y + (max.h / 3 * 2)
-	    elseif bottomHeight == 2 then
-	       f.h = max.h / 2
-	       f.y = max.y + (max.h / 2)
-	    else
-	       f.h = max.h / 3 * 2
-	       f.y = max.y + (max.h / 3)
-	    end
-
-	    preWds = title
-	    win:setFrame(f, 0)
-	 end
-
-	 local function full()
-	    local win = hs.window.focusedWindow()
-	    leftWidth, rightWidth, topHeight, bottomHeight = 2, 2, 2, 2
-	    preWds = ''
-	    win:maximize(0)
-	 end
-
-	 return {
-	    left = left,
-	    right = right,
-	    top = top,
-	    bottom = bottom,
-	    full = full
-	 }
-   end)()
-
+   -- bind hotkeys
    hs.fnutils.each({
-	 {key = "Left", fn = resizeWin.left},
-	 {key = "Right", fn = resizeWin.right},
-	 {key = "Up", fn = resizeWin.top},
-	 {key = "Down", fn = resizeWin.bottom},
-	 {key = "f", fn = resizeWin.full}
+	 {key = "Left", fn = left},
+	 {key = "Right", fn = right},
+	 {key = "Up", fn = topOrFull},
+	 {key = "Down", fn = bottom},
    }, function(meta)
-	 hs.hotkey.bind(winModifier, meta.key, meta.fn)
+	 hs.hotkey.bind({'ctrl', 'alt'}, meta.key, meta.fn)
    end)
 
 end
@@ -277,15 +206,14 @@ function watchConfigFileChange()
       end
    end
    
-   hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/",
-      reloadConfig):start()
+   hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", reloadConfig):start()
    
 end
 
 function main()
 
    -- register hotkeys to arrange multiple windows
-   initWindowsManager()
+   setupWindowsManager()
    
    -- change input method by app
    setInputMethodByApp()
@@ -296,7 +224,7 @@ function main()
    installIPCClient()
 
    -- auto reload config file
-   -- watchConfigFileChange()
+   --watchConfigFileChange()
 
    sendNotification('Hammerspoon', 'config loaded')
 end
