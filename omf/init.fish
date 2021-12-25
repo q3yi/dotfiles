@@ -6,6 +6,21 @@ set fish_function_path $OMF_CONFIG/functions $fish_function_path
 
 set -gx LANG en_US.UTF-8
 
+if test "$WSL_DISTRO_NAME" != ""
+    # set host in WSL
+    set -gx WSL_HOST_IP (awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null)
+    # set x11 forward server
+    set -gx DISPLAY $WSL_HOST_IP:0
+    set -gx LIBGL_ALWAYS_INDIRECT 1
+
+    # set keyboard layout
+    setxkbmap -layout "us(dvorak)"
+
+    # gtk setting for high DPI
+    # set -gx GDK_SCALE 0.5
+    # set -gx GDK_DPI_SCALE 2
+end
+
 # golang configuration
 # add go to system path
 set -gx PATH $HOME/go/bin $PATH
@@ -16,7 +31,6 @@ set -gx GO111MODULE on
 
 # shortcut for cross system compile
 alias go4linux="GOOS=linux GOARCH=386 CGO_ENABLED=0 go build"
-
 
 # rust configuration
 # add cargo to system path

@@ -1,7 +1,8 @@
 # proxy function provide helper to config shell or system proxies.
 
 set proxy_interface Wi-Fi
-set proxy_listen_addr '127.0.0.1'
+set proxy_listen_addr $WSL_HOST_IP
+set -q WSL_HOST_IP || set proxy_listen_addr '127.0.0.1'
 set proxy_web_port 7890
 set proxy_sock_port 7890
 set proxy_bypass_addrs 192.168.0.0/16 10.0.0.0/8 172.16.0.0/12 127.0.0.1 localhost '*.local' timestamp.apple.com
@@ -56,54 +57,40 @@ function _proxy_usage
 Configurate system or shell proxies. System proxy only works on macOS.
 
 Usage:
-  proxy get shell
-  proxy start shell
-  proxy stop shell
-  proxy get system
-  proxy start system
-  proxy stop system
+  proxy shell        # Show shell proxy status
+  proxy shell on     # Turn on proxy in shell
+  proxy shell off    # Turn off proxy in shell
+  proxy system       # Show system proxy status
+  proxy system on    # Turn on system proxy
+  proxy system off   # Turn off system proxy
 "
 end
 
-function proxy -a op env -d "Control system and shell proxy"
-    if test "$op" = ""
+function proxy -a env op -d "Control system and shell proxy"
+    if test "$env" = ""
         _proxy_usage
         return
     end
 
-    switch "$op"
-        case get
-            if test "$env" = system
-                _proxy_show_system_stat
-                return
-            end
-            if test "$env" = shell
-                _proxy_show_shell_env
-                return
-            end
-        case start
-            if test "$env" = system
-                _proxy_set_system
-                return
-            end
-            if test "$env" = shell
+    switch "$env"
+        case shell
+            if test "$op" = on
                 _proxy_set_shell_env
-                return
-            end
-            echo "subsystem needed"
-        case stop
-            if test "$env" = system
-                _proxy_toggle_system off
-                return
-            end
-            if test "$env" = shell
+            else if test "$op" = off
                 _proxy_clear_shell_env
-                return
+            else
+                _proxy_show_shell_env
+            end
+        case system
+            if test "$op" = on
+                _proxy_set_system
+            else if test "$op" = off
+                _proxy_toggle_system off
+            else
+                _proxy_show_system_stat
             end
         case '*'
-            echo "only 'get', 'start' or 'stop' allowed"
+            echo "only empty, 'on' or 'off' allowed"
             return
     end
-
-    echo "environment needed, 'system' or 'shell'"
 end
