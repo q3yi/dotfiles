@@ -21,6 +21,16 @@ if test "$WSL_DISTRO_NAME" != ""
     # set -gx GDK_DPI_SCALE 2
 end
 
+if test (uname) = Darwin
+    # homebrew configuration
+    set -gx PATH /usr/local/sbin $PATH
+    # homebrew bottle mirrors
+    set -gx HOMEBREW_BOTTLE_DOMAIN https://mirrors.ustc.edu.cn/homebrew-bottles
+end
+
+# use gnu coreutils instead `ls' in macOS which is origin from BSD
+set -gx PATH /usr/local/opt/coreutils/libexec/gnubin $PATH
+
 # golang configuration
 # add go to system path
 set -gx PATH $HOME/go/bin $PATH
@@ -38,9 +48,5 @@ set -gx PATH $HOME/.cargo/bin $PATH
 # set rustup and rust mirrors
 set -gx RUSTUP_DIST_SERVER https://mirrors.ustc.edu.cn/rust-static
 
-# homebrew configuration
-# homebrew bottle mirrors
-set -gx HOMEBREW_BOTTLE_DOMAIN https://mirrors.ustc.edu.cn/homebrew-bottles
-
-# correction for common mistake
-alias vim="nvim"
+# haskell configuration
+set -gx PATH $HOME/.ghcup/bin $PATH
