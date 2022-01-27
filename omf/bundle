@@ -1,5 +1,0 @@
-package emacs
-package foreign-env
-theme boxfish
-theme default
-theme nai

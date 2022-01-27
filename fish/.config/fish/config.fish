@@ -1,11 +1,8 @@
-# fish shell configuration, oh-my-fish required
-# https://github.com/oh-my-fish/oh-my-fish
-
-# add customed function path to fish_function_path
-set fish_function_path $OMF_CONFIG/functions $fish_function_path
+# fish shell configuration
 
 set -gx LANG en_US.UTF-8
 
+# config for WSL on windows
 if test "$WSL_DISTRO_NAME" != ""
     # set host in WSL
     set -gx WSL_HOST_IP (awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null)
@@ -50,3 +47,6 @@ set -gx RUSTUP_DIST_SERVER https://mirrors.ustc.edu.cn/rust-static
 
 # haskell configuration
 set -gx PATH $HOME/.ghcup/bin $PATH
+
+# haskell cabal
+set -gx PATH $HOME/.cabal/bin $PATH
