@@ -18,17 +18,22 @@ if test "$WSL_DISTRO_NAME" != ""
     # set -gx GDK_DPI_SCALE 2
 end
 
+# config for macOS
 if test (uname) = Darwin
     # homebrew configuration
     set -gx PATH /usr/local/sbin $PATH
     # homebrew bottle mirrors
     set -gx HOMEBREW_BOTTLE_DOMAIN https://mirrors.ustc.edu.cn/homebrew-bottles
+
+    # use gnu coreutils instead `ls' in macOS which is origin from BSD
+    set -gx PATH /usr/local/opt/coreutils/libexec/gnubin $PATH
 end
 
-# use gnu coreutils instead `ls' in macOS which is origin from BSD
-set -gx PATH /usr/local/opt/coreutils/libexec/gnubin $PATH
 
 # golang configuration
+# golang version manager path
+set -gx PATH $HOME/.g/bin $PATH
+set -gx PATH $HOME/.g/go/bin $PATH
 # add go to system path
 set -gx PATH $HOME/go/bin $PATH
 # set golang environments
@@ -37,7 +42,7 @@ set -gx GOPROXY "https://goproxy.cn"
 set -gx GO111MODULE on
 
 # shortcut for cross system compile
-alias go4linux="GOOS=linux GOARCH=386 CGO_ENABLED=0 go build"
+# alias go4linux="GOOS=linux GOARCH=386 CGO_ENABLED=0 go build"
 
 # rust configuration
 # add cargo to system path
@@ -50,3 +55,6 @@ set -gx PATH $HOME/.ghcup/bin $PATH
 
 # haskell cabal
 set -gx PATH $HOME/.cabal/bin $PATH
+
+# setup proxy
+proxy shell on

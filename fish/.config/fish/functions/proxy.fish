@@ -35,20 +35,24 @@ function _proxy_set_shell_env
     set -gx http_proxy "http://$proxy_listen_addr:$proxy_web_port"
     set -gx https_proxy "http://$proxy_listen_addr:$proxy_web_port"
     set -gx all_proxy "socks5://$proxy_listen_addr:$proxy_sock_port"
+    #set -gx no_proxy (echo $proxy_bypass_addrs | sed -e 's/ /,/g')
+    set -gx no_proxy (string replace -a ' ' ',' "$proxy_bypass_addrs")
 end
 
 function _proxy_clear_shell_env
     set -gu http_proxy
     set -gu https_proxy
     set -gu all_proxy
+    set -gu no_proxy
 end
 
 function _proxy_show_shell_env
     echo "\
 shell proxies
-http:  $http_proxy
-https: $http_proxy
-sock5: $all_proxy
+http:   $http_proxy
+https:  $http_proxy
+sock5:  $all_proxy
+bypass: $no_proxy
 "
 end
 
@@ -68,29 +72,29 @@ end
 
 function proxy -a env op -d "Control system and shell proxy"
     if test "$env" = ""
-        _proxy_usage
-        return
+	_proxy_usage
+	return
     end
 
     switch "$env"
-        case shell
-            if test "$op" = on
-                _proxy_set_shell_env
-            else if test "$op" = off
-                _proxy_clear_shell_env
-            else
-                _proxy_show_shell_env
-            end
-        case system
-            if test "$op" = on
-                _proxy_set_system
-            else if test "$op" = off
-                _proxy_toggle_system off
-            else
-                _proxy_show_system_stat
-            end
-        case '*'
-            echo "only empty, 'on' or 'off' allowed"
-            return
+	case shell
+	    if test "$op" = on
+		_proxy_set_shell_env
+	    else if test "$op" = off
+		_proxy_clear_shell_env
+	    else
+		_proxy_show_shell_env
+	    end
+	case system
+	    if test "$op" = on
+		_proxy_set_system
+	    else if test "$op" = off
+		_proxy_toggle_system off
+	    else
+		_proxy_show_system_stat
+	    end
+	case '*'
+	    echo "only empty, 'on' or 'off' allowed"
+	    return
     end
 end
