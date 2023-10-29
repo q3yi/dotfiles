@@ -11,7 +11,8 @@ if test "$WSL_DISTRO_NAME" != ""
     set -gx LIBGL_ALWAYS_INDIRECT 1
 
     # set keyboard layout
-    setxkbmap -layout "us(dvorak)"
+    # TODO comment out temporarily, as it hung up in WSL
+    # setxkbmap -layout "us(dvorak)"
 
     # gtk setting for high DPI
     # set -gx GDK_SCALE 0.5
@@ -24,11 +25,9 @@ if test (uname) = Darwin
     set -gx PATH /usr/local/sbin $PATH
     # homebrew bottle mirrors
     set -gx HOMEBREW_BOTTLE_DOMAIN https://mirrors.ustc.edu.cn/homebrew-bottles
-
     # use gnu coreutils instead `ls' in macOS which is origin from BSD
     set -gx PATH /usr/local/opt/coreutils/libexec/gnubin $PATH
 end
-
 
 # golang configuration
 # golang version manager path
@@ -58,3 +57,14 @@ set -gx PATH $HOME/.cabal/bin $PATH
 
 # setup proxy
 proxy shell on
+
+# flutter
+set -gx PATH $HOME/flutter/bin $PATH
+
+# fnm - node version manager
+fnm env | source
+
+# setup shell proxies
+proxy shell on
+
+set -gx PATH /Users/qingyi/.foundry/bin $PATH
