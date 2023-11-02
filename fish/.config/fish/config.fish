@@ -68,3 +68,10 @@ fnm env | source
 proxy shell on
 
 set -gx PATH /Users/qingyi/.foundry/bin $PATH
+
+# set repos folder for quick jump command `p`
+set -gx REPOS $(realpath ~/.emacs.d/)
+set -gx REPOS $REPOS $(realpath ~/repos/)
+set -gx REPOS $REPOS $(realpath ~/.config/)
+
+# cd $(fd '.git$' ~/repos --prune -u -t d -d 3 -x echo {//} | fzf)

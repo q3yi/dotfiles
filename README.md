@@ -18,22 +18,16 @@ I use `stow` to manage all the symbolics:
 > stow -d . -t ~ -D fish
 ```
 
-## configs
+## summary
 
-1. `cargo` rust build tool, set mirror of crate.io
+- `cargo` set mirror of crate.io.
 
-2. `fish` default shell config, I remove OMF(oh-my-fish) recently, the
-   default fish shell is very useful already. There's not need to add
-   any third package to change it.
+- `fish` setup some environment variables, add two useful function:
+    - `proxy` command help to toggle proxy in shell and macOS
+    - `p` command jump to git project in predefined project folders, require `fd` and `fzf` to work
 
-3. `git` set username and email.
+- `git` set username and email.
 
-4. `hammerspoon` a customed scripts to manange window on mac, but the
-   app is more than that.
+4. `hammerspoon` mainly used to manage window layouts on macOS.
 
-5. `nvim` I use a lot `nvim` before I switched to `emacs`, and I never
-   look back. Backup the config for some terminal environment maybe
-   encounter in future.
-
-6. `tmux` session manager used together with `nvim`, so it is rarely
-   used in my system now.
+5. `tmux` change prefix key <kbd>Ctrl+b</kbd> to <kbd>Ctrl+z</kbd> and change some other settings.
