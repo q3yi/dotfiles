@@ -1,227 +1,228 @@
 --- hammerspoon config file
+require("hs.ipc")
 
-function sendNotification(title, text)
+function Notifiy(title, text)
     hs.notify.new({ title = title, informativeText = text }):send()
 end
 
--- Resizing windows
-function setupWindowsManager()
+-- resizing window with shortcuts
+-- the up, down, left, right function take screen as a 6*2 grid
+local window_manager = {
+    previous = { win_title = "", x = 0, y = 0, w = 6, h = 2, timestamp = 0 }
+}
+
+function window_manager.get_prev_layout()
+    local now = hs.timer.secondsSinceEpoch()
+    if now - window_manager.previous.timestamp > 10 then
+        return { win_title = "", x = 0, y = 0, w = 3, h = 2, timestamp = 0 }
+    end
+
+    return window_manager.previous
+end
+
+function window_manager.save_prev_layout(win_title, cell)
+    local prev = window_manager.previous
+    prev.win_title = win_title
+    prev.x = cell.x
+    prev.y = cell.y
+    prev.w = cell.w
+    prev.h = cell.h
+    prev.timestamp = hs.timer.secondsSinceEpoch()
+end
+
+function window_manager.set_frame(win, cell)
+    local win_frame = win:frame()
+    local screen_frame = win:screen():frame()
+
+    win_frame.x = screen_frame.x + screen_frame.w * cell.x / 6
+    win_frame.w = screen_frame.w * cell.w / 6
+    win_frame.y = screen_frame.y + screen_frame.h * cell.y / 2
+    win_frame.h = screen_frame.h * cell.h / 2
+
+    win:setFrame(win_frame, 0)
+
+    window_manager.save_prev_layout(win:title(), cell)
+end
+
+function window_manager.to_left()
+    local win = hs.window.focusedWindow()
+    local prev = window_manager.get_prev_layout()
+    local win_title = win:title()
+    local w = 3
+
+    if prev.win_title == win_title then
+        w = prev.w + 1
+        if w > 4 then
+            w = 2
+        end
+    else
+        w = 6 - prev.w
+    end
+
+    local cell = { x = 0, y = prev.y, w = w, h = prev.h }
+    window_manager.set_frame(win, cell)
+end
+
+function window_manager.to_right()
+    local win = hs.window.focusedWindow()
+    local prev = window_manager.get_prev_layout()
+    local win_title = win:title()
+    local w = 3
+
+    if prev.win_title == win_title then
+        w = prev.w + 1
+        if w > 4 then
+            w = 2
+        end
+    else
+        w = 6 - prev.w
+    end
+
+    local cell = { x = 6 - w, y = prev.y, w = w, h = prev.h }
+    window_manager.set_frame(win, cell)
+end
+
+function window_manager.to_top()
+    local win = hs.window.focusedWindow()
+    local prev = window_manager.get_prev_layout()
+    local win_title = win:title()
+    local h = 2
+
+    if prev.win_title == win_title then
+        h = prev.h + 1
+        if h > 2 then
+            h = 1
+        end
+    end
+
+    local cell = { x = 0, y = 0, w = 6, h = h }
+    if h == 2 then
+        win:maximize(0)
+        window_manager.save_prev_layout(win_title, cell)
+    else
+        window_manager.set_frame(win, cell)
+    end
+end
+
+-- to_bottom function always place current window to lower half screen
+function window_manager.to_bottom()
+    local win = hs.window.focusedWindow()
+    local cell = { x = 0, y = 1, w = 6, h = 2 }
+    window_manager.set_frame(win, cell)
+end
+
+function window_manager.setup(opts)
     hs.grid.MARGINX = 0
     hs.grid.MARGINY = 0
-    hs.grid.GRIDWIDTH = 12
-    hs.grid.GRIDHEIGHT = 12
 
-    local layout = {
-        title = '',
-        x = 0,
-        y = 0,
-        w = 2, -- max:12, 2 stand for (2 * 3) / 12
-        h = 2, -- max:2 2 stand for screen max height
+    if not opts.modifier then
+        return
+    end
+
+    hs.hotkey.bind(opts.modifier, "Left", window_manager.to_left)
+    hs.hotkey.bind(opts.modifier, "Right", window_manager.to_right)
+    hs.hotkey.bind(opts.modifier, "Up", window_manager.to_top)
+    hs.hotkey.bind(opts.modifier, "Down", window_manager.to_bottom)
+    hs.hotkey.bind(opts.modifier, "g", function()
+        local win = hs.window.focusedWindow()
+        hs.grid.setGrid({ w = 6, h = 4 }, win:screen())
+        hs.grid.toggleShow()
+    end)
+end
+
+-- quick switch app by shortcuts
+local quick_switcher = {
+    shortcuts = {
+        { key = "1", app = "Alacritty" },
+        { key = "2", app = "Google Chrome" },
+        { key = "3", app = "Obsidian" },
+    }
+}
+
+function quick_switcher.setup(opt)
+    if not opt.modifier then
+        return
+    end
+    hs.fnutils.each(quick_switcher.shortcuts, function(config)
+        hs.hotkey.bind(opt.modifier, config.key, function()
+            hs.application.launchOrFocus(config.app)
+        end)
+    end)
+end
+
+-- change input source automatically by app
+local input_source = {
+    SQUIRREL_SOURCE_ID = "im.rime.inputmethod.Squirrel.Hans",
+    DVORAK_SOURCE_ID = "com.apple.keylayout.Dvorak",
+}
+
+function input_source.copy_source_id()
+    local source_id = hs.keycodes.currentSourceID()
+    local app_name = hs.window.focusedWindow():application():name()
+    hs.pasteboard.setContents(source_id)
+    Notifiy("App: " .. app_name, "Input source id copied.")
+end
+
+function input_source.setup(opts)
+    if opts.add_shortcut then
+        hs.hotkey.bind({ 'ctrl', 'cmd' }, ".", input_source.copy_source_id)
+    end
+
+    local app_source = {
+        ["Code"] = input_source.DVORAK_SOURCE_ID,
+        ["Emacs"] = input_source.DVORAK_SOURCE_ID,
+        ["iTerm2"] = input_source.DVORAK_SOURCE_ID,
+        ["Alacritty"] = input_source.DVORAK_SOURCE_ID,
+        -- { app = "Chrome", source_id = input_source.DVORAK_SOURCE_ID },
+        ["WeChat"] = input_source.SQUIRREL_SOURCE_ID,
     }
 
-    local function clearLayout()
-        layout.title = ''
-        layout.x = 0
-        layout.y = 0
-        layout.w = 2
-        layout.h = 2
-    end
-
-    local function left()
-        local win = hs.window.focusedWindow()
-        local f = win:frame()
-        local screen = win:screen()
-        local max = screen:frame()
-        local title = win:title()
-
-        if title == layout.title then
-            layout.w = layout.w % 3 + 1
-        else
-            clearLayout()
-            layout.title = title
-        end
-
-        f.x, f.w = max.x, (max.w * layout.w * 3 / 12)
-        f.y, f.h = max.y + layout.y * max.h / 2, layout.h * max.h / 2
-
-        win:setFrame(f, 0)
-    end
-
-    local function right()
-        local win = hs.window.focusedWindow()
-        local f = win:frame()
-        local screen = win:screen()
-        local max = screen:frame()
-        local title = win:title()
-
-        if title == layout.title then
-            layout.x = layout.x % 3 + 1
-            layout.w = 4 - layout.x
-        else
-            clearLayout()
-            layout.x = 2
-            layout.w = 2
-            layout.title = title
-        end
-
-        f.x, f.w = max.x + 3 * layout.x * max.w / 12, max.w * layout.w * 3 / 12
-        f.y, f.h = max.y + layout.y * max.h / 2, layout.h * max.h / 2
-
-        win:setFrame(f, 0)
-    end
-
-    local function topOrFull()
-        local win = hs.window.focusedWindow()
-        local f = win:frame()
-        local screen = win:screen()
-        local max = screen:frame()
-        local title = win:title()
-
-        if title == layout.title then
-            layout.x, layout.y, layout.w, layout.h = 0, 0, 4, layout.h % 2 + 1
-        else
-            layout.x, layout.y, layout.h, layout.w = 0, 0, 2, 4
-            layout.title = title
-        end
-
-        if layout.h == 2 then
-            layout.w = 4
-            win:maximize(0)
-        else
-            f.y, f.h = max.y, layout.h * max.h / 2
-            f.x, f.w = max.x, max.w
-
-            win:setFrame(f, 0)
-        end
-    end
-
-    local function bottom()
-        local win = hs.window.focusedWindow()
-        local f = win:frame()
-        local screen = win:screen()
-        local max = screen:frame()
-        local title = win:title()
-
-        layout.title = title
-        layout.x, layout.y, layout.h, layout.w = 0, 1, 1, 4
-
-        f.y, f.h = max.y + max.h / 2, max.h / 2
-        f.x, f.w = max.x, max.w
-
-        win:setFrame(f, 0)
-    end
-
-    -- bind hotkeys
-    hs.fnutils.each({
-        { key = "Left",  fn = left },
-        { key = "Right", fn = right },
-        { key = "Up",    fn = topOrFull },
-        { key = "Down",  fn = bottom },
-    }, function(meta)
-        hs.hotkey.bind({ 'ctrl', 'alt' }, meta.key, meta.fn)
-    end)
-end
-
--- function switchAppByShortcut()
---    -- quick switch app
---    local appSwitchModifier = {"alt"}
-
---    hs.fnutils.each({
---	 {key = "1", app = "Firefox"},
---	 {key = "2", app = "iTerm"},
---	 {key = "3", app = "Emacs"},
---	 {key = "4", app = "ForkLift"}
---    }, function(meta)
---	 hs.hotkey.bind(appSwitchModifier, meta.key, function()
---	       hs.application.launchOrFocus(meta.app)
---	 end)
---    end)
--- end
-
-function setInputMethodByApp(keyToShowSourceID)
-    function showInputMethodSourceID()
-        hs.alert.show("App path:        "
-            .. hs.window.focusedWindow():application():path()
-            .. "\n"
-            .. "App name:      "
-            .. hs.window.focusedWindow():application():name()
-            .. "\n"
-            .. "IM source id:  "
-            .. hs.keycodes.currentSourceID())
-    end
-
-    if (keyToShowSourceID) then
-        hs.hotkey.bind({ 'ctrl', 'cmd' }, ".", showInputMethodSourceID)
-    end
-
-    function setToChineseInputMethod()
-        hs.keycodes.currentSourceID("im.rime.inputmethod.Squirrel.Hans")
-    end
-
-    function setToDvorakInputMethod()
-        hs.keycodes.currentSourceID("com.apple.keylayout.Dvorak")
-    end
-
-    function addAppInputMethodHook(appName, setInputMethodFunc, event)
-        event = event or hs.window.filter.windowFocused
-
-        hs.window.filter.new(appName):subscribe(event, setInputMethodFunc)
-    end
-
-    -- Automatic change input method base on current App focused
-    hs.fnutils.each({
-        -- {app = "Emacs", func = setToDvorakInputMethod},
-        -- {app = "Code", func = setToDvorakInputMethod},
-        { app = "iTerm2", func = setToDvorakInputMethod },
-        -- {app = "Firefox", func = setToDvorakInputMethod},
-
-        { app = "WeChat", func = setToChineseInputMethod }
-    }, function(config)
-        hs.window.filter.new(config.app):subscribe(
+    for app, source_id in pairs(app_source) do
+        hs.window.filter.new(app):subscribe(
             hs.window.filter.windowFocused,
-            function() config.func() end)
-    end)
-end
-
-function installIPCClient()
-    if not hs.ipc.cliInstall() then
-        sendNotification('Hammerspoon', 'fail to instal hs ipc cli')
+            function()
+                hs.keycodes.currentSourceID(source_id)
+            end)
     end
 end
 
-function watchConfigFileChange()
-    function reloadConfig(files)
-        doReload = false
-        for _, file in pairs(files) do
-            if file:sub(-4) == ".lua" then
-                doReload = true
-            end
-        end
-        if doReload then
+local function auto_reload_config(opt)
+    local function check_reload(files)
+        local flag = hs.fnutils.some(files, function(file)
+            return file:sub(-4) == ".lua"
+        end)
+
+        if flag then
             hs.reload()
-            sendNotification('Hammerspoon', 'config reloaded')
+            Notifiy('Hammerspoon', 'config reloaded')
         end
     end
 
-    hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", reloadConfig):start()
+    if opt.watch then
+        hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", check_reload):start()
+    end
 end
 
-function main()
-    -- register hotkeys to arrange multiple windows
-    setupWindowsManager()
-
-    -- change input method by app
-    -- setInputMethodByApp()
-
+local function main()
     -- install ipc cli
     -- for more information, follow the documention
     -- https://www.hammerspoon.org/docs/hs.ipc.html#cliInstall
-    installIPCClient()
+    if not hs.ipc.cliInstall() then
+        Notifiy('Hammerspoon', 'fail to instal hs ipc cli')
+    end
+
+    -- register hotkeys to arrange multiple windows
+    window_manager.setup { modifier = { "ctrl", "alt" } }
+
+    -- quick_switcher.setup { modifier = { "cmd" } }
+
+    -- change input method by app
+    input_source.setup { add_shortcut = false }
 
     -- auto reload config file
-    --watchConfigFileChange()
+    auto_reload_config { watch = false }
 
-    sendNotification('Hammerspoon', 'config loaded')
+    Notifiy('Hammerspoon', 'config loaded')
 end
 
 main()
