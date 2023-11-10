@@ -1,22 +1,6 @@
 # dotfiles
 
-There are collection of my configuration for some programs.
-
-## stow
-
-I use `stow` to manage all the symbolics:
-
-1. Install config.
-
-```bash
-> stow -d . -t ~ -S fish
-```
-
-2. Delete a config.
-
-```bash
-> stow -d . -t ~ -D fish
-```
+Collection of my configuration for useful cli programs.
 
 ## summary
 
@@ -31,3 +15,5 @@ I use `stow` to manage all the symbolics:
 4. `hammerspoon` mainly used to manage window layouts on macOS.
 
 5. `tmux` change prefix key <kbd>Ctrl+b</kbd> to <kbd>Ctrl+z</kbd> and change some other settings.
+
+6. `wezterm` set fonts and background.
