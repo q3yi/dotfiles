@@ -9,19 +9,27 @@ end
 
 config.font = wezterm.font_with_fallback({
     -- { family = "Fantasque Sans Mono" },
-    -- { family = "Ubuntu Mono" },
-    -- { family = "Iosevka Term SS08", weight = "Light" },
-    { family = "M PLUS Code Latin", weight = "Light" },
-    -- { family = "JetBrains Mono", weight = "Light" },
-    -- { family = "STFangsong", weight = "Regular" },
-    { family = "SimSong", weight = "Regular" },
-    -- { family = "LXGW WenKai", weight = "Regular" },
-    -- { family = "Noto Serif CJK SC", weight = "Regular" },
+    -- { family = "Envy Code R" },
+    -- { family = "M PLUS Code Latin", weight = "Light" },
+    -- "Terminus (TTF)",
 
+    -- JetBrains Mono's width is 0.6, so you should scale CJK font to 1.2
+    -- for better experience
+    { family = "JetBrains Mono", weight = "Light" },
+
+    -- CJK fonts
+    -- { family = "STFangsong", weight = "Regular", scale = 1.2 },
+    { family = "SimSong", weight = "Regular", scale = 1.2 },
+    -- { family = "LXGW WenKai", weight = "Regular", scale = 1.2 },
+    -- { family = "Noto Serif CJK SC", weight = "Regular", scale = 1.2 },
+
+    -- Symbolics
+    { family = "Symbols Nerd Font Mono", scale = 0.75 },
 })
 
-config.font_size = 14
+config.font_size = 13
 config.freetype_load_target = "Light"
+config.front_end = "WebGpu"
 
 -- config.color_scheme = "Modus-Vivendi"
 -- config.color_scheme = "Tomorrow Night"

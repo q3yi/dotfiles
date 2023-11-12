@@ -173,8 +173,11 @@ function input_source.setup(opts)
         ["Emacs"] = input_source.DVORAK_SOURCE_ID,
         ["iTerm2"] = input_source.DVORAK_SOURCE_ID,
         ["Alacritty"] = input_source.DVORAK_SOURCE_ID,
-        -- { app = "Chrome", source_id = input_source.DVORAK_SOURCE_ID },
+        ["WezTerm"] = input_source.DVORAK_SOURCE_ID,
+
         ["WeChat"] = input_source.SQUIRREL_SOURCE_ID,
+        ["Obsidian"] = input_source.SQUIRREL_SOURCE_ID,
+        -- ["Firefox"] = input_source.SQUIRREL_SOURCE_ID,
     }
 
     for app, source_id in pairs(app_source) do
@@ -217,7 +220,7 @@ local function main()
     -- quick_switcher.setup { modifier = { "cmd" } }
 
     -- change input method by app
-    input_source.setup { add_shortcut = false }
+    input_source.setup { add_shortcut = true }
 
     -- auto reload config file
     auto_reload_config { watch = false }
