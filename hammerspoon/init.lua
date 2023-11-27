@@ -220,7 +220,7 @@ local function main()
     -- quick_switcher.setup { modifier = { "cmd" } }
 
     -- change input method by app
-    input_source.setup { add_shortcut = true }
+    input_source.setup { add_shortcut = false }
 
     -- auto reload config file
     auto_reload_config { watch = false }
