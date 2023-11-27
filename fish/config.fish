@@ -65,7 +65,14 @@ proxy shell on
 set -gx PATH $HOME/flutter/bin $PATH
 
 # fnm - node version manager
-fnm env | source
+if command -v fnm >/dev/null
+    fnm env | source
+end
+
+# starship
+if command -v starship >/dev/null
+    starship init fish | source
+end
 
 # setup shell proxies
 proxy shell on
