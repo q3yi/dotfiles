@@ -55,6 +55,9 @@ set -gx PATH $HOME/.ghcup/bin $PATH
 # haskell cabal
 set -gx PATH $HOME/.cabal/bin $PATH
 
+# Set default editor to neovim
+set -gx EDITOR $(command -v nvim) || command -v vim
+
 # setup proxy
 proxy shell on
 
