@@ -62,6 +62,10 @@ config.mouse_bindings = {
     },
 }
 
+-- make both option key send alt in mac
+config.send_composed_key_when_left_alt_is_pressed = false;
+config.send_composed_key_when_right_alt_is_pressed = false;
+
 -- Config theme, better to use a custom cursor color if using theme, some theme
 -- override the cursor color and may cover the text color in neovim.
 --
