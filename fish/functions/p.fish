@@ -6,5 +6,5 @@ function fd_git_proj --description 'Find all git projects in given paths using `
 end
 
 function p --description 'Jump to git project folder'
-    cd $(git-finder $REPOS | fzf)
+    cd $(fdir $REPOS | fzf)
 end
