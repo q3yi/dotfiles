@@ -8,41 +8,16 @@ if wezterm.config_builder then
 end
 
 config.font = wezterm.font_with_fallback({
-    -- Fonts which are exactly 0.5em width, do not need to scale CJK font.
-    -- { family = "Fantasque Sans Mono" },
-    { family = "Iosevka Term", weight = "Regular", harfbuzz_features = { "ss08", "calt=0", "dlig" } },
-    -- { family = "M PLUS Code Latin", weight = "Regular" },
-    -- { family = "Monofur Nerd Font", weight = "Regular" },
+    { family = "Iosevka Term Extended", weight = "Regular", harfbuzz_features = { "ss15" } },
+    -- { family = "Intel One Mono", weight = "Regular" },
+    -- { family = "Cascadia Code", weight = "Light", harfbuzz_features = { "calt", "ss01" } },
+    { family = "JetBrains Mono", weight = "Regular" },
 
-
-    -- Fonts which are 0.6em width, scale CJK font to 1.2 when use.
-    -- { family = "JetBrains Mono", weight = "Regular" },
-    -- { family = "Monego", weight = "Regular" },
-    -- { family = "JuliaMono", weight = "Regular" },
-    -- { family = "Victor Mono", weight = "Regular" },
-    -- { family = "Sometype Mono", weight = "Regular" },
-    -- {
-    --     family = "Rec Mono Linear",
-    --     weight = "Regular",
-    --     harfbuzz_features = {"calt", "dlig"}
-    -- },
-
-    -- Fonts which width is not 0.5em nor 0.6em
-    -- { family = "Envy Code R" },
-    -- { family = "Sudo Var", weight = "Regular" },
-
-    -- CJK fonts
-    -- { family = "STFangsong", weight = "Regular", scale = 1.2 },
-    -- { family = "SimSong", weight = "Regular" },
-    { family = "Sarasa Term SC", weight = "Regular" },
-    -- { family = "LXGW WenKai", weight = "Regular", scale = 1.2 },
-    -- { family = "Noto Sans CJK SC", weight = "Regular" },
-
-    -- Symbolics
+    { family = "LXGW WenKai", weight = "Regular", scale = 1.2 },
     { family = "Symbols Nerd Font Mono", scale = 0.75 },
 })
 
-config.font_size = 14
+config.font_size = 13
 config.freetype_load_target = "Light"
 config.front_end = "WebGpu"
 
