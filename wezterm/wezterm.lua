@@ -53,6 +53,14 @@ config.front_end = "WebGpu"
 -- config.cursor_blink_ease_out = "Constant"
 -- config.cursor_blink_rate = 800
 -- config.force_reverse_video_cursor = true
+config.mouse_bindings = {
+    -- make CTRL-Click open hyperlinks
+    {
+        event = { Up = { streak = 1, button = 'Left' } },
+        mods = 'CTRL',
+        action = wezterm.action.OpenLinkAtMouseCursor,
+    },
+}
 
 -- Config theme, better to use a custom cursor color if using theme, some theme
 -- override the cursor color and may cover the text color in neovim.
