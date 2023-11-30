@@ -11,7 +11,6 @@ if test "$WSL_DISTRO_NAME" != ""
     set -gx LIBGL_ALWAYS_INDIRECT 1
 
     # set keyboard layout
-    # TODO comment out temporarily, as it hung up in WSL
     # setxkbmap -layout "us(dvorak)"
 
     # gtk setting for high DPI
@@ -30,39 +29,29 @@ if test (uname) = Darwin
 end
 
 # golang configuration
-# golang version manager path
-set -gx PATH $HOME/.g/bin $PATH
-set -gx PATH $HOME/.g/go/bin $PATH
-# add go to system path
-set -gx PATH $HOME/go/bin $PATH
-# set golang environments
 set -gx GOPATH $HOME/go
+set -gx PATH $GOPATH/bin $PATH
 set -gx GOPROXY "https://goproxy.cn"
 set -gx GO111MODULE on
-
-# shortcut for cross system compile
-# alias go4linux="GOOS=linux GOARCH=386 CGO_ENABLED=0 go build"
+alias go4linux="GOOS=linux GOARCH=386 CGO_ENABLED=0 go build"
 
 # rust configuration
-# add cargo to system path
 set -gx PATH $HOME/.cargo/bin $PATH
-# set rustup and rust mirrors
-set -gx RUSTUP_DIST_SERVER https://mirrors.ustc.edu.cn/rust-static
+set -gx RUSTUP_UPDATE_ROOT https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup
+set -gx RUSTUP_DIST_SERVER https://mirrors.tuna.tsinghua.edu.cn/rustup
 
 # haskell configuration
 set -gx PATH $HOME/.ghcup/bin $PATH
-
-# haskell cabal
 set -gx PATH $HOME/.cabal/bin $PATH
 
-# Set default editor to neovim
-set -gx EDITOR $(command -v nvim) || command -v vim
-
-# setup proxy
-proxy shell on
+# foundry for solidity
+set -gx PATH $HOME/.foundry/bin $PATH
 
 # flutter
 set -gx PATH $HOME/flutter/bin $PATH
+
+# Set default editor to neovim
+set -gx EDITOR $(command -v nvim) || command -v vim
 
 # fnm - node version manager
 if command -v fnm >/dev/null
@@ -77,11 +66,7 @@ end
 # setup shell proxies
 proxy shell on
 
-set -gx PATH /Users/qingyi/.foundry/bin $PATH
-
 # set repos folder for quick jump command `p`
-set -gx REPOS $(realpath ~/.emacs.d/)
-set -gx REPOS $REPOS $(realpath ~/repos/)
-set -gx REPOS $REPOS $(realpath ~/.config/)
-
-# cd $(fd '.git$' ~/repos --prune -u -t d -d 3 -x echo {//} | fzf)
+set -gx REPOS $HOME/.emacs.d/
+set -gx REPOS $REPOS $HOME/repos/
+set -gx REPOS $REPOS $HOME/.config/

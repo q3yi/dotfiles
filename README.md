@@ -4,16 +4,20 @@ Collection of my configuration for useful cli programs.
 
 ## summary
 
-1. `cargo` set mirror of crate.io.
+Include configs:
 
-2. `fish` setup some environment variables, add two useful function:
-    - `proxy` command help to toggle proxy in shell and macOS
-    - `p` command jump to git project in predefined project folders, require `fd` and `fzf` to work
+1. `cargo`, set mirror of crate.io.
 
-3. `git` set username and email.
+2. `fish` shell, some functions require `fzf` and `fdir`.
 
-4. `hammerspoon` mainly used to manage window layouts on macOS.
+3. `git` set personal username and email.
 
-5. `tmux` change prefix key <kbd>Ctrl+b</kbd> to <kbd>Ctrl+z</kbd> and change some other settings.
+4. `hammerspoon` for window management and auto select input method on macOS.
 
-6. `wezterm` set fonts and background.
+5. `vifm` file manager.
+
+6. `zellij` terminal multiplexer, like `tmux`.
+
+7. `wezterm` cross platform terminal app.
+
+8. `starship` cross shell prompt.
