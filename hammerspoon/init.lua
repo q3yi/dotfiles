@@ -1,7 +1,7 @@
 --- hammerspoon config file
 require("hs.ipc")
 
-function Notifiy(title, text)
+function Notify(title, text)
     hs.notify.new({ title = title, informativeText = text }):send()
 end
 
@@ -133,8 +133,8 @@ end
 -- quick switch app by shortcuts
 local quick_switcher = {
     shortcuts = {
-        { key = "1", app = "Alacritty" },
-        { key = "2", app = "Google Chrome" },
+        { key = "1", app = "WezTerm" },
+        { key = "2", app = "Brave Browser" },
         { key = "3", app = "Obsidian" },
     }
 }
@@ -160,7 +160,7 @@ function input_source.copy_source_id()
     local source_id = hs.keycodes.currentSourceID()
     local app_name = hs.window.focusedWindow():application():name()
     hs.pasteboard.setContents(source_id)
-    Notifiy("App: " .. app_name, "Input source id copied.")
+    Notify("App: " .. app_name, "Input source id copied.")
 end
 
 function input_source.setup(opts)
@@ -197,7 +197,7 @@ local function auto_reload_config(opt)
 
         if flag then
             hs.reload()
-            Notifiy('Hammerspoon', 'config reloaded')
+            Notify('Hammerspoon', 'config reloaded')
         end
     end
 
@@ -211,7 +211,7 @@ local function main()
     -- for more information, follow the documention
     -- https://www.hammerspoon.org/docs/hs.ipc.html#cliInstall
     if not hs.ipc.cliInstall() then
-        Notifiy('Hammerspoon', 'fail to instal hs ipc cli')
+        Notify('Hammerspoon', 'fail to instal hs ipc cli')
     end
 
     -- register hotkeys to arrange multiple windows
@@ -225,7 +225,7 @@ local function main()
     -- auto reload config file
     auto_reload_config { watch = false }
 
-    Notifiy('Hammerspoon', 'config loaded')
+    Notify('Hammerspoon', 'config loaded')
 end
 
 main()
