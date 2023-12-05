@@ -5,6 +5,10 @@ function Notify(title, text)
     hs.notify.new({ title = title, informativeText = text }):send()
 end
 
+function NotifyWithSound(title, text)
+    hs.notify.new({ title = title, informativeText = text, soundName = "Blow"}):send()
+end
+
 -- resizing window with shortcuts
 -- the up, down, left, right function take screen as a 6*2 grid
 local window_manager = {
