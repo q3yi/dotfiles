@@ -74,13 +74,14 @@ command! make !!make %a
 command! mkcd :mkdir %a | cd %a
 command! reload :write | restart full
 command! ztab zellij action new-tab -c %d -l compact
+command! tw tmux new-window -c %d
 
 " ------------------------------------------------------------------------------
 " Sample keyboard mappings
 " ------------------------------------------------------------------------------
 
 " Start shell in new zellij tab with current directory
-nnoremap s :ztab<cr>
+nnoremap s :tw<cr>
 
 " Display sorting dialog
 nnoremap S :sort<cr>
