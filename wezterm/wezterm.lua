@@ -8,8 +8,8 @@ if wezterm.config_builder then
 end
 
 config.font = wezterm.font_with_fallback({
-    { family = "Iosevka Term Extended", weight = "Regular", harfbuzz_features = { "ss15" } },
-    -- { family = "Intel One Mono", weight = "Regular" },
+    -- { family = "Iosevka Term Extended", weight = "Regular", harfbuzz_features = { "ss15" } },
+    -- { family = "Monego", weight = "Regular" },
     -- { family = "Cascadia Code", weight = "Light", harfbuzz_features = { "calt", "ss01" } },
     { family = "JetBrains Mono", weight = "Regular" },
 
@@ -20,6 +20,8 @@ config.font = wezterm.font_with_fallback({
 config.font_size = 13
 config.freetype_load_target = "Light"
 config.front_end = "WebGpu"
+config.freetype_load_flags = "NO_AUTOHINT"
+-- config.line_height = 0.9
 
 -- Config cursor style
 --
@@ -27,7 +29,7 @@ config.front_end = "WebGpu"
 -- config.cursor_blink_ease_in = "Constant"
 -- config.cursor_blink_ease_out = "Constant"
 -- config.cursor_blink_rate = 800
--- config.force_reverse_video_cursor = true
+config.force_reverse_video_cursor = true
 config.mouse_bindings = {
     -- make CTRL-Click open hyperlinks
     {
@@ -50,7 +52,7 @@ config.send_composed_key_when_right_alt_is_pressed = false;
 
 config.window_background_opacity = 0.85
 config.macos_window_background_blur = 20
-config.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }
+config.window_padding = { left = "0.5cell", right = "0.5cell", top = 0, bottom = 0 }
 
 config.hide_tab_bar_if_only_one_tab = true
 
