@@ -4,7 +4,7 @@ format = "$username$hostname$directory$character"
 right_format = "$git_branch$git_commit$git_state$git_metrics$git_status$sudo"
 continuation_prompt = "[∙](bright-black) "
 scan_timeout = 30
-command_timeout = 500
+command_timeout = 1000
 add_newline = false
 
 [character]
