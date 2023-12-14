@@ -6,7 +6,7 @@ function Notify(title, text)
 end
 
 function NotifyWithSound(title, text)
-    hs.notify.new({ title = title, informativeText = text, soundName = "Blow"}):send()
+    hs.notify.new({ title = title, informativeText = text, soundName = "Blow" }):send()
 end
 
 -- resizing window with shortcuts
@@ -158,6 +158,7 @@ end
 local input_source = {
     SQUIRREL_SOURCE_ID = "im.rime.inputmethod.Squirrel.Hans",
     DVORAK_SOURCE_ID = "com.apple.keylayout.Dvorak",
+    APPLE_CHINESE_SOURCE_ID = "com.apple.inputmethod.SCIM.ITABC",
 }
 
 function input_source.copy_source_id()
@@ -179,8 +180,8 @@ function input_source.setup(opts)
         ["Alacritty"] = input_source.DVORAK_SOURCE_ID,
         ["WezTerm"] = input_source.DVORAK_SOURCE_ID,
 
-        ["WeChat"] = input_source.SQUIRREL_SOURCE_ID,
-        ["Obsidian"] = input_source.SQUIRREL_SOURCE_ID,
+        -- ["WeChat"] = input_source.SQUIRREL_SOURCE_ID,
+        -- ["Obsidian"] = input_source.SQUIRREL_SOURCE_ID,
         -- ["Firefox"] = input_source.SQUIRREL_SOURCE_ID,
     }
 
