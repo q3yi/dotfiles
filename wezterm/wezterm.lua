@@ -43,17 +43,21 @@ config.mouse_bindings = {
 config.send_composed_key_when_left_alt_is_pressed = false;
 config.send_composed_key_when_right_alt_is_pressed = false;
 
+local colorschemes = {
+    -- dark = "Modus-Vivendi",
+    dark = "Tomorrow Night",
+    -- dark = "Catppuccin Mocha",
+    -- dark = "Dark Pastel",
+
+    -- light = "Catppuccin Latte",
+    light = "Tomorrow",
+    -- light = "Modus-Operandi",
+}
+
+config.color_scheme = colorschemes.dark
+
 -- change theme with keys
 wezterm.on("flip-colorscheme", function(window, _)
-    local colorschemes = {
-        dark = "Modus-Vivendi",
-        -- dark = "Tomorrow Night",
-        -- dark = "Catppuccin Mocha",
-
-        light = "Catppuccin Latte",
-        -- light = "Modus-Operandi",
-    }
-
     local overrides = window:get_config_overrides()
     local selected = ""
 
