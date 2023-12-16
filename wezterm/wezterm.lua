@@ -7,17 +7,63 @@ if wezterm.config_builder then
     config = wezterm.config_builder()
 end
 
-config.font = wezterm.font_with_fallback({
-    -- { family = "Iosevka Term Extended",  weight = "Regular", harfbuzz_features = { "ss15" } },
-    -- { family = "Cascadia Code",          weight = "Light",   harfbuzz_features = { "calt", "ss01" } },
-    { family = "Monego",                 weight = "Regular" },
-    { family = "JetBrains Mono",         weight = "Regular" },
+local fonts = {
+    -- latin fonts
+    cascadia_code = { family = "Cascadia Code", weight = "Light", harfbuzz_features = { "calt", "ss01" } },
+    fantasque_sans_mono = { family = "Fantasque Sans Mono" },
+    iosevka_plex = { family = "Iosevka Term", weight = "Regular", harfbuzz_features = { "ss15" } },
+    intel_one_mono = { family = "Intel One Mono" },
+    jetbrains_mono = { family = "JetBrains Mono", weight = "Regular" },
+    monego = { family = "Monego", weight = "Regular" },
+    monofur = { family = "Monofur Nerd Font" },
+    m_plus = { family = "M PLUS Code Latin", weight = "Light" },
+    -- cjk fonts
+    lxgw = { family = "LXGW WenKai", weight = "Regular" },
+    lxgw_x12 = { family = "LXGW WenKai", weight = "Regular", scale = 1.2 },
+    -- symbols
+    symbols_only = { family = "Symbols Nerd Font Mono", scale = 0.75 },
+}
 
-    { family = "LXGW WenKai",            weight = "Regular", scale = 1.2 },
-    { family = "Symbols Nerd Font Mono", scale = 0.75 },
-})
+local font_styles = {
+    list = {
+        {
+            font_with_fallback = { fonts.jetbrains_mono, fonts.lxgw_x12, fonts.symbols_only },
+            size = 12.5,
+        },
+        {
+            font_with_fallback = { fonts.monego, fonts.lxgw_x12, fonts.symbols_only },
+            size = 12.5,
+        },
+        {
+            font_with_fallback = { fonts.iosevka_plex, fonts.lxgw, fonts.symbols_only },
+            size = 14,
+        },
+        {
+            font_with_fallback = { fonts.m_plus, fonts.lxgw, fonts.symbols_only },
+            size = 14,
+        },
+    },
+    selected = 2,
+}
 
-config.font_size = 12.5
+local function build_font_config_overrides(overrides, selected)
+    local style = font_styles.list[selected]
+    font_styles.selected = selected
+    overrides.font = wezterm.font_with_fallback(style.font_with_fallback)
+    overrides.font_size = style.size
+end
+
+build_font_config_overrides(config, font_styles.selected)
+
+wezterm.on("change-font", function(window, _)
+    local overrides = window:get_config_overrides() or {}
+    local selected = font_styles.selected % #font_styles.list + 1
+
+    build_font_config_overrides(overrides, selected)
+
+    window:set_config_overrides(overrides)
+end)
+
 config.freetype_load_target = "Light"
 config.front_end = "WebGpu"
 config.freetype_load_flags = "NO_AUTOHINT"
@@ -80,8 +126,9 @@ config.hide_tab_bar_if_only_one_tab = true
 config.automatically_reload_config = false
 
 config.keys = {
-    { mods = "CMD|SHIFT", key = "r", action = wezterm.action.ReloadConfiguration },
-    { mods = "CMD|SHIFT", key = "t", action = wezterm.action.EmitEvent "flip-colorscheme" },
+    { mods = "CTRL|ALT|SHIFT", key = "r", action = wezterm.action.ReloadConfiguration },
+    { mods = "CTRL|ALT|SHIFT", key = "t", action = wezterm.action.EmitEvent "flip-colorscheme" },
+    { mods = "CTRL|ALT|SHIFT", key = "f", action = wezterm.action.EmitEvent "change-font" },
 }
 
 return config
