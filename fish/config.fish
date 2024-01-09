@@ -63,6 +63,12 @@ if command -v starship >/dev/null
     starship init fish | source
 end
 
+# pyenv
+if command -v pyenv >/dev/null
+    pyenv init - | source
+end
+
+
 # setup shell proxies
 proxy shell on
 
