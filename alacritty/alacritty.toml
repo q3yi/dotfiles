@@ -1,0 +1,11 @@
+live_config_reload = true
+
+[window]
+padding = {x = 2, y = 2}
+dynamic_padding = true
+
+[font]
+normal = { family = "EnvyCodeR Nerd Font Mono", style = "Regular"}
+size = 11
+offset = { x = 0, y = 0 }
+builtin_box_drawing = false
