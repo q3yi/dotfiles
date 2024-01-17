@@ -23,5 +23,9 @@ function p --description 'Jump to git project folder'
 
     # or use fd command instead of fdir
     # fd '.git$' $root --prune -u -t d -d 3 -x echo {//}
-    cd $(fdir --has $_flag_has $folders | fzf)
+    set --local jump_to $(fdir --has $_flag_has $folders | fzf)
+
+    if test -n "$jump_to"
+        cd $jump_to
+    end
 end
