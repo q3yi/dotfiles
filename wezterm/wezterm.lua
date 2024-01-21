@@ -35,12 +35,12 @@ local font_styles = {
             size = 12.5,
         },
         {
-            font_with_fallback = { fonts.iosevka_plex, fonts.lxgw, fonts.symbols_only },
+            font_with_fallback = { fonts.fantasque_sans_mono, fonts.lxgw, fonts.symbols_only },
             size = 14,
         },
         {
-            font_with_fallback = { fonts.m_plus, fonts.lxgw, fonts.symbols_only },
-            size = 14,
+            font_with_fallback = { fonts.monofur, fonts.lxgw, fonts.symbols_only },
+            size = 14.5,
         },
     },
     selected = 2,
