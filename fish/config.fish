@@ -53,6 +53,12 @@ set -gx PATH $HOME/flutter/bin $PATH
 # Set default editor to neovim
 set -gx EDITOR $(command -v nvim) || command -v vim
 
+if test -d $HOME/.dotnet
+    set -gx PATH $PATH $HOME/.dotnet
+    set -gx PATH $PATH $HOME/.dotnet/tools
+    set -gx DOTNET_ROOT $HOME/.dotnet
+end
+
 # fnm - node version manager
 if command -v fnm >/dev/null
     fnm env | source
