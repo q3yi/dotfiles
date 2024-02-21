@@ -29,30 +29,46 @@ if test (uname) = Darwin
 end
 
 # golang configuration
-set -gx GOPATH $HOME/go
-set -gx PATH $GOPATH/bin $PATH
-set -gx GOPROXY "https://goproxy.cn"
-set -gx GO111MODULE on
-alias go4linux="GOOS=linux GOARCH=386 CGO_ENABLED=0 go build"
+if test -d $HOME/go
+    set -gx GOPATH $HOME/go
+    set -gx PATH $GOPATH/bin $PATH
+    set -gx GO111MODULE on
+    set -gx GOPROXY "https://goproxy.cn"
+    set -gx GOSUMDB "sum.golang.org" "https://goproxy.cn/sumdb/sum.golang.org"
+    if test (uname) != Linux
+        # only needed on mac or windows
+        alias go4linux="GOOS=linux GOARCH=386 CGO_ENABLED=0 go build"
+    end
+end
+if test -d /usr/local/go
+    # go root on linux
+    set -gx PATH /usr/local/go/bin $PATH
+end
 
 # rust configuration
-set -gx PATH $HOME/.cargo/bin $PATH
-set -gx RUSTUP_UPDATE_ROOT https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup
-set -gx RUSTUP_DIST_SERVER https://mirrors.tuna.tsinghua.edu.cn/rustup
+if test -d $HOME/.cargo
+    set -gx PATH $HOME/.cargo/bin $PATH
+    set -gx RUSTUP_UPDATE_ROOT https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup
+    set -gx RUSTUP_DIST_SERVER https://mirrors.tuna.tsinghua.edu.cn/rustup
+end
 
 # haskell configuration
-set -gx PATH $HOME/.ghcup/bin $PATH
-set -gx PATH $HOME/.cabal/bin $PATH
+if test -d $HOME/.ghcup
+    set -gx PATH $HOME/.ghcup/bin $PATH
+    set -gx PATH $HOME/.cabal/bin $PATH
+end
 
 # foundry for solidity
-set -gx PATH $HOME/.foundry/bin $PATH
+if test -d $HOME/.foundry
+    set -gx PATH $HOME/.foundry/bin $PATH
+end
 
 # flutter
-set -gx PATH $HOME/flutter/bin $PATH
+if test -d $HOME/flutter
+    set -gx PATH $HOME/flutter/bin $PATH
+end
 
-# Set default editor to neovim
-set -gx EDITOR $(command -v nvim) || command -v vim
-
+# dotnet configuration
 if test -d $HOME/.dotnet
     set -gx PATH $PATH $HOME/.dotnet
     set -gx PATH $PATH $HOME/.dotnet/tools
@@ -74,6 +90,8 @@ if command -v pyenv >/dev/null
     pyenv init - | source
 end
 
+# Set default editor to neovim
+set -gx EDITOR $(command -v nvim) || command -v vim
 
 # setup shell proxies
 proxy shell on
