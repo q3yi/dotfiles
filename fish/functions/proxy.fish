@@ -4,7 +4,7 @@ set proxy_interface Wi-Fi
 set proxy_listen_addr $WSL_HOST_IP
 set -q WSL_HOST_IP || set proxy_listen_addr '127.0.0.1'
 set proxy_web_port 7890
-set proxy_sock_port 7890
+set proxy_sock_port 7891
 set proxy_bypass_addrs 192.168.0.0/16 10.0.0.0/8 172.16.0.0/12 127.0.0.1 localhost '*.local' timestamp.apple.com
 
 function _proxy_toggle_system -a state
@@ -72,29 +72,29 @@ end
 
 function proxy -a env op -d "Control system and shell proxy"
     if test "$env" = ""
-	_proxy_usage
-	return
+        _proxy_usage
+        return
     end
 
     switch "$env"
-	case shell
-	    if test "$op" = on
-		_proxy_set_shell_env
-	    else if test "$op" = off
-		_proxy_clear_shell_env
-	    else
-		_proxy_show_shell_env
-	    end
-	case system
-	    if test "$op" = on
-		_proxy_set_system
-	    else if test "$op" = off
-		_proxy_toggle_system off
-	    else
-		_proxy_show_system_stat
-	    end
-	case '*'
-	    echo "only empty, 'on' or 'off' allowed"
-	    return
+        case shell
+            if test "$op" = on
+                _proxy_set_shell_env
+            else if test "$op" = off
+                _proxy_clear_shell_env
+            else
+                _proxy_show_shell_env
+            end
+        case system
+            if test "$op" = on
+                _proxy_set_system
+            else if test "$op" = off
+                _proxy_toggle_system off
+            else
+                _proxy_show_system_stat
+            end
+        case '*'
+            echo "only empty, 'on' or 'off' allowed"
+            return
     end
 end
