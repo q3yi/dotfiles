@@ -90,8 +90,12 @@ if command -v pyenv >/dev/null
     pyenv init - | source
 end
 
-# Set default editor to neovim
-set -gx EDITOR $(command -v nvim) || command -v vim
+if command -v nvim >/dev/null
+    # set default editor to neovim
+    set -gx EDITOR (command -v vim)
+    # set man pager to neovim
+    set -gx MANPAGER "nvim +Man!"
+end
 
 # setup shell proxies
 proxy shell on
