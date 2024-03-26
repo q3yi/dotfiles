@@ -97,6 +97,15 @@ if command -v nvim >/dev/null
     set -gx MANPAGER "nvim +Man!"
 end
 
+# Quick theme switch in plasma
+if command -v lookandfeeltool >/dev/null
+    # list all theme with command:
+    # lookandfeeltool --list
+
+    alias lightplasma="lookandfeeltool --a org.kde.breeze.desktop"
+    alias darkplasma="lookandfeeltool --a org.kde.breezedark.desktop"
+end
+
 # setup shell proxies
 proxy shell on
 
