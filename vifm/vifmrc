@@ -10,7 +10,7 @@ endif
 
 set syscalls
 
-set trash
+" set trash
 
 set vifminfo=dhistory,chistory,state,tui,shistory,
             \phistory,fhistory,dirstack,registers,bookmarks,bmarks
