@@ -63,7 +63,7 @@ config.mouse_bindings = {
 
 local colorschemes = {
     -- dark = "Ibm 3270 (High Contrast) (Gogh)",
-    dark = "Jellybean (Gogh)",
+    dark = "Wez",
     -- dark = "Brogrammer (Gogh)",
     -- dark = "Campbell (Gogh)",
     -- dark = "Borland (Gogh)",
