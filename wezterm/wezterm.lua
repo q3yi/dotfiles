@@ -7,48 +7,26 @@ if wezterm.config_builder then
     config = wezterm.config_builder()
 end
 
-local fonts = {
-    -- latin fonts
-    cascadia_code = { family = "Cascadia Code", weight = "Light", harfbuzz_features = { "calt", "ss01" } },
-    fantasque_sans_mono = { family = "Fantasque Sans Mono" },
-    iosevka_plex = { family = "Iosevka Term", weight = "Regular", harfbuzz_features = { "ss15" } },
-    intel_one_mono = { family = "Intel One Mono" },
-    jetbrains_mono = { family = "JetBrains Mono", weight = "Regular" },
-    monego = { family = "Monego", weight = "Regular" },
-    monofur = { family = "Monofur Nerd Font" },
-    m_plus = { family = "M PLUS Code Latin", weight = "Light" },
-    -- cjk fonts
-    lxgw = { family = "LXGW WenKai", weight = "Regular" },
-    lxgw_x12 = { family = "LXGW WenKai", weight = "Regular", scale = 1.2 },
-    -- symbols
-    symbols_only = { family = "Symbols Nerd Font Mono", scale = 0.75 },
-}
+local ok, helper = pcall(require, "helper")
 
-local font_styles = {
-    list = {
-        {
-            font_with_fallback = { fonts.jetbrains_mono, fonts.lxgw_x12, fonts.symbols_only },
-            size = 12.5,
-        },
-        {
-            font_with_fallback = { fonts.monego, fonts.lxgw_x12, fonts.symbols_only },
-            size = 12.5,
-        },
-        {
-            font_with_fallback = { fonts.fantasque_sans_mono, fonts.lxgw, fonts.symbols_only },
-            size = 14,
-        },
-        {
-            font_with_fallback = { fonts.monofur, fonts.lxgw, fonts.symbols_only },
-            size = 14.5,
-        },
-    },
-    selected = 2,
-}
+if ok then
+    helper.add_config(config)
+end
+
+local font_styles = { list = {}, selected = 0 }
+
+if helper.font_styles ~= nil then
+    font_styles = helper.font_styles
+end
 
 local function build_font_config_overrides(overrides, selected)
+    if #font_styles.list == 0 then
+        return
+    end
+
     local style = font_styles.list[selected]
     font_styles.selected = selected
+
     overrides.font = wezterm.font_with_fallback(style.font_with_fallback)
     overrides.font_size = style.size
 end
@@ -56,18 +34,16 @@ end
 build_font_config_overrides(config, font_styles.selected)
 
 wezterm.on("change-font", function(window, _)
+    if #font_styles.list == 0 then
+        return
+    end
+
     local overrides = window:get_config_overrides() or {}
     local selected = font_styles.selected % #font_styles.list + 1
 
     build_font_config_overrides(overrides, selected)
-
     window:set_config_overrides(overrides)
 end)
-
-config.freetype_load_target = "Light"
-config.front_end = "WebGpu"
-config.freetype_load_flags = "NO_AUTOHINT"
--- config.line_height = 0.9
 
 -- Config cursor style
 --
@@ -85,19 +61,15 @@ config.mouse_bindings = {
     },
 }
 
--- make both option key send alt in mac
-config.send_composed_key_when_left_alt_is_pressed = false;
-config.send_composed_key_when_right_alt_is_pressed = false;
-
 local colorschemes = {
-    -- dark = "Modus-Vivendi",
-    dark = "Tomorrow Night",
-    -- dark = "Catppuccin Mocha",
-    -- dark = "Dark Pastel",
+    -- dark = "Ibm 3270 (High Contrast) (Gogh)",
+    dark = "Jellybean (Gogh)",
+    -- dark = "Brogrammer (Gogh)",
+    -- dark = "Campbell (Gogh)",
+    -- dark = "Borland (Gogh)",
 
-    -- light = "Catppuccin Latte",
-    light = "Tomorrow",
-    -- light = "Modus-Operandi",
+    light = "Terminal Basic (Gogh)",
+    -- light = "Bluloco Light (Gogh)",
 }
 
 config.color_scheme = colorschemes.dark
@@ -117,10 +89,6 @@ wezterm.on("flip-colorscheme", function(window, _)
     }
 end)
 
--- config.window_background_opacity = 0.85
--- config.macos_window_background_blur = 20
--- config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
-config.window_padding = { left = 5, right = 5, top = 5, bottom = 0 }
 config.hide_tab_bar_if_only_one_tab = true
 
 config.automatically_reload_config = false
