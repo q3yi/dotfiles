@@ -97,6 +97,11 @@ if command -v nvim >/dev/null
     set -gx MANPAGER "nvim +Man!"
 end
 
+# fzf
+if command -v fzf >/dev/null
+    fzf --fish | FZF_CTRL_T_COMMAND= source
+end
+
 # Quick theme switch in plasma
 if command -v lookandfeeltool >/dev/null
     # list all theme with command:
