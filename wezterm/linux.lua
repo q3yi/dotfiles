@@ -6,8 +6,8 @@ local M = {}
 
 function M.add_config(cfg)
     cfg.enable_wayland = true
-    cfg.initial_cols = 120
-    cfg.initial_rows = 45
+    cfg.initial_cols = 128
+    cfg.initial_rows = 48
 
     cfg.window_padding = {
         left = "1px", right = "1px", top = "1px", bottom = "1px"
@@ -29,13 +29,19 @@ M.font_styles = {
         },
         {
             font_with_fallback = {
-                fonts.jetbrains_mono, fonts.lxgw_x12, fonts.symbols_only
+                fonts.jetbrains_mono, fonts.harmony_sans_x12, fonts.symbols_only
             },
             size = 10,
         },
         {
             font_with_fallback = {
-                fonts.monego, fonts.lxgw_x12, fonts.symbols_only
+                fonts.input_mono, fonts.honor_sans, fonts.symbols_only
+            },
+            size = 11,
+        },
+        {
+            font_with_fallback = {
+                fonts.monego, fonts.honor_sans_x12, fonts.symbols_only
             },
             size = 10,
         },
