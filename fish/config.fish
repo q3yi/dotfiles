@@ -75,6 +75,11 @@ if test -d $HOME/.dotnet
     set -gx DOTNET_ROOT $HOME/.dotnet
 end
 
+# zig configuration
+if test -d $HOME/zig
+    set -gx PATH $PATH $HOME/zig/current
+end
+
 # fnm - node version manager
 if command -v fnm >/dev/null
     fnm env | source
@@ -92,7 +97,7 @@ end
 
 if command -v nvim >/dev/null
     # set default editor to neovim
-    set -gx EDITOR (command -v vim)
+    set -gx EDITOR (command -v nvim)
     # set man pager to neovim
     set -gx MANPAGER "nvim +Man!"
 end
