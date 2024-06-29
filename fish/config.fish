@@ -80,6 +80,11 @@ if test -d $HOME/zig
     set -gx PATH $PATH $HOME/zig/current
 end
 
+# ocaml
+if test -d $HOME/.opam
+    source /home/max/.opam/opam-init/init.fish >/dev/null 2>/dev/null; or true
+end
+
 # fnm - node version manager
 if command -v fnm >/dev/null
     fnm env | source
