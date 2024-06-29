@@ -29,6 +29,10 @@ local M = {
     honor_sans_x12 = { family = "HONOR Sans CN", weight = "Light", scale = 1.2 },
     harmony_sans = { family = "HarmonyOS Sans SC", weight = "Light" },
     harmony_sans_x12 = { family = "HarmonyOS Sans SC", weight = "Light", scale = 1.2 },
+    mi_sans = { family = "MiSans", weight = "Light" },
+    mi_sans_x12 = { family = "MiSans", weight = "Light", scale = 1.2 },
+    mi_sans_l3 = { family = "MiSans L3" },
+    mi_sans_l3_x12 = { family = "MiSans L3", scale = 1.2 },
     noto_sans_cjk = { family = "Noto Sans CJK SC", weight = "Regular" },
 
     -- symbols

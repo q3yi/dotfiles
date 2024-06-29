@@ -6,8 +6,8 @@ local M = {}
 
 function M.add_config(cfg)
     -- make both option key send alt in mac
-    cfg.send_composed_key_when_left_alt_is_pressed = false;
-    cfg.send_composed_key_when_right_alt_is_pressed = false;
+    cfg.send_composed_key_when_left_alt_is_pressed = false
+    cfg.send_composed_key_when_right_alt_is_pressed = false
 
     -- cfg.window_background_opacity = 0.85
     -- cfg.macos_window_background_blur = 20
@@ -29,25 +29,33 @@ M.font_styles = {
     list = {
         {
             font_with_fallback = {
-                fonts.jetbrains_mono, fonts.lxgw_x12, fonts.symbols_only
+                fonts.jetbrains_mono,
+                fonts.lxgw_x12,
+                fonts.symbols_only,
             },
             size = 12.5,
         },
         {
             font_with_fallback = {
-                fonts.monaco, fonts.lxgw_x12, fonts.symbols_only
+                fonts.monaco,
+                fonts.lxgw_x12,
+                fonts.symbols_only,
             },
             size = 12.5,
         },
         {
             font_with_fallback = {
-                fonts.iosevka, fonts.lxgw, fonts.symbols_only
+                fonts.iosevka,
+                fonts.lxgw,
+                fonts.symbols_only,
             },
             size = 14,
         },
         {
             font_with_fallback = {
-                fonts.monofur, fonts.lxgw, fonts.symbols_only
+                fonts.monofur,
+                fonts.lxgw,
+                fonts.symbols_only,
             },
             size = 14.5,
         },

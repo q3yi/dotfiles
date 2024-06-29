@@ -55,8 +55,8 @@ config.force_reverse_video_cursor = true -- change cursor fg base on bg.
 config.mouse_bindings = {
     -- make CTRL-Click open hyperlinks, not working in tmux.
     {
-        event = { Up = { streak = 1, button = 'Left' } },
-        mods = 'CTRL',
+        event = { Up = { streak = 1, button = "Left" } },
+        mods = "CTRL",
         action = wezterm.action.OpenLinkAtMouseCursor,
     },
 }
@@ -84,9 +84,9 @@ wezterm.on("flip-colorscheme", function(window, _)
     else
         selected = colorschemes.dark
     end
-    window:set_config_overrides {
-        color_scheme = selected
-    }
+    window:set_config_overrides({
+        color_scheme = selected,
+    })
 end)
 
 config.hide_tab_bar_if_only_one_tab = true
@@ -95,8 +95,8 @@ config.automatically_reload_config = false
 
 config.keys = {
     { mods = "CTRL|ALT|SHIFT", key = "r", action = wezterm.action.ReloadConfiguration },
-    { mods = "CTRL|ALT|SHIFT", key = "t", action = wezterm.action.EmitEvent "flip-colorscheme" },
-    { mods = "CTRL|ALT|SHIFT", key = "f", action = wezterm.action.EmitEvent "change-font" },
+    { mods = "CTRL|ALT|SHIFT", key = "t", action = wezterm.action.EmitEvent("flip-colorscheme") },
+    { mods = "CTRL|ALT|SHIFT", key = "f", action = wezterm.action.EmitEvent("change-font") },
 }
 
 return config
