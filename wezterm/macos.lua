@@ -4,6 +4,41 @@ local fonts = require("fonts")
 
 local M = {}
 
+local fontconfigs = {
+    {
+        font_with_fallback = {
+            fonts.pragmatapro,
+            fonts.lxgw,
+            fonts.symbols_only,
+        },
+        size = 14,
+    },
+    {
+        font_with_fallback = {
+            fonts.jetbrains_mono,
+            fonts.lxgw_x12,
+            fonts.symbols_only,
+        },
+        size = 12.5,
+    },
+    {
+        font_with_fallback = {
+            fonts.monaco,
+            fonts.lxgw_x12,
+            fonts.symbols_only,
+        },
+        size = 12.5,
+    },
+    {
+        font_with_fallback = {
+            fonts.monofur,
+            fonts.lxgw,
+            fonts.symbols_only,
+        },
+        size = 14.5,
+    },
+}
+
 function M.add_config(cfg)
     -- make both option key send alt in mac
     cfg.send_composed_key_when_left_alt_is_pressed = false
@@ -23,44 +58,8 @@ function M.add_config(cfg)
 
     cfg.initial_cols = 120
     cfg.initial_rows = 45
-end
 
-M.font_styles = {
-    list = {
-        {
-            font_with_fallback = {
-                fonts.jetbrains_mono,
-                fonts.lxgw_x12,
-                fonts.symbols_only,
-            },
-            size = 12.5,
-        },
-        {
-            font_with_fallback = {
-                fonts.monaco,
-                fonts.lxgw_x12,
-                fonts.symbols_only,
-            },
-            size = 12.5,
-        },
-        {
-            font_with_fallback = {
-                fonts.iosevka,
-                fonts.lxgw,
-                fonts.symbols_only,
-            },
-            size = 14,
-        },
-        {
-            font_with_fallback = {
-                fonts.monofur,
-                fonts.lxgw,
-                fonts.symbols_only,
-            },
-            size = 14.5,
-        },
-    },
-    selected = 1,
-}
+    fonts.setup(cfg, fontconfigs)
+end
 
 return M

@@ -4,7 +4,43 @@ local fonts = require("fonts")
 
 local M = {}
 
-function M.add_config(cfg)
+local fontconfigs = {
+    {
+        font_with_fallback = {
+            fonts.ibm_plex_mono,
+            fonts.lxgw_x12,
+            fonts.symbols_only,
+        },
+        size = 11,
+    },
+    {
+        font_with_fallback = {
+            fonts.pragmatapro,
+            fonts.harmony_sans,
+            fonts.symbols_only,
+        },
+        size = 13,
+    },
+    {
+        font_with_fallback = {
+            -- { family = "Pragmasevka", harfbuzz_features = { "calt=0" } },
+            fonts.iosevka,
+            fonts.harmony_sans,
+            fonts.symbols_only,
+        },
+        size = 13,
+    },
+    {
+        font_with_fallback = {
+            fonts.input_mono_compressed,
+            fonts.harmony_sans,
+            fonts.symbols_only,
+        },
+        size = 12,
+    },
+}
+
+function M.setup(cfg)
     cfg.enable_wayland = true
     cfg.initial_cols = 128
     cfg.initial_rows = 48
@@ -16,48 +52,13 @@ function M.add_config(cfg)
         bottom = "1px",
     }
 
-    local gpus = wezterm.gui.enumerate_gpus()
-    cfg.webgpu_preferred_adapter = gpus[1]
-    cfg.front_end = "WebGpu"
-    cfg.freetype_load_flags = "NO_AUTOHINT"
-end
+    -- local gpus = wezterm.gui.enumerate_gpus()
+    -- cfg.webgpu_preferred_adapter = gpus[1]
+    -- cfg.front_end = "WebGpu"
+    cfg.check_for_updates = false
+    cfg.freetype_load_target = "Light"
 
-M.font_styles = {
-    list = {
-        {
-            font_with_fallback = {
-                fonts.iosevka,
-                fonts.harmony_sans,
-                fonts.symbols_only,
-            },
-            size = 11,
-        },
-        {
-            font_with_fallback = {
-                fonts.jetbrains_mono,
-                fonts.harmony_sans_x12,
-                fonts.symbols_only,
-            },
-            size = 10,
-        },
-        {
-            font_with_fallback = {
-                fonts.input_mono,
-                fonts.harmony_sans_x12,
-                fonts.symbols_only,
-            },
-            size = 11,
-        },
-        {
-            font_with_fallback = {
-                fonts.monego,
-                fonts.harmony_sans_x12,
-                fonts.symbols_only,
-            },
-            size = 10,
-        },
-    },
-    selected = 1,
-}
+    fonts.setup(cfg, fontconfigs)
+end
 
 return M

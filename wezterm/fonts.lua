@@ -1,5 +1,15 @@
 -- fonts
 
+local wezterm = require("wezterm")
+
+local fontconfigs = {
+    configs = {
+        fonts = { family = "monospace" },
+        size = 14,
+    },
+    current_index = 1,
+}
+
 local M = {
     -- latin fonts
     cascadia_code = {
@@ -11,16 +21,23 @@ local M = {
     iosevka = {
         family = "Iosevka Term",
         weight = "Regular",
-        harfbuzz_features = { "calt=0" },
+        -- stretch = "Expanded",
+        harfbuzz_features = {
+            "calt=0",
+            -- "ss07",
+        },
     },
     ibm_plex_mono = { family = "IBM Plex Mono" },
     intel_one_mono = { family = "Intel One Mono" },
-    input_mono = { family = "Input Mono Compressed" },
+    input_mono_compressed = { family = "Input Mono Compressed" },
     jetbrains_mono = { family = "JetBrains Mono", weight = "Regular" },
     monaco = { family = "Monaco", weight = "Regular" },
     monego = { family = "Monego", weight = "Regular" },
     monofur = { family = "Monofur" },
     m_plus = { family = "M PLUS Code Latin", weight = "Light" },
+    victor_mono = { family = "Victor Mono" },
+    envy_code_r = { family = "Envy Code R" },
+    pragmatapro = { family = "PragmataPro Mono Liga" },
 
     -- cjk fonts
     lxgw = { family = "LXGW WenKai", weight = "Regular" },
@@ -36,7 +53,37 @@ local M = {
     noto_sans_cjk = { family = "Noto Sans CJK SC", weight = "Regular" },
 
     -- symbols
-    symbols_only = { family = "Symbols Nerd Font Mono", scale = 0.75 },
+    symbols_only = { family = "Symbols Nerd Font" },
 }
+
+function M.setup(config, fonts)
+    if fonts then
+        fontconfigs.configs = fonts
+        fontconfigs.current_index = 1
+    end
+
+    local current_config = fontconfigs.configs[fontconfigs.current_index]
+
+    config.font = wezterm.font_with_fallback(current_config.font_with_fallback)
+    config.font_size = current_config.size
+
+    -- register event handler
+    wezterm.on("change-font", M.on_change_font)
+end
+
+function M.next_font()
+    fontconfigs.current_index = fontconfigs.current_index % #fontconfigs.configs + 1
+    return fontconfigs.configs[fontconfigs.current_index]
+end
+
+function M.on_change_font(window, _)
+    local overrides = window:get_config_overrides() or {}
+    local font = M.next_font()
+
+    overrides.font = wezterm.font_with_fallback(font.font_with_fallback)
+    overrides.font_size = font.size
+
+    window:set_config_overrides(overrides)
+end
 
 return M
