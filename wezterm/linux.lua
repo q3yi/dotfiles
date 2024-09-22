@@ -11,7 +11,7 @@ local fontconfigs = {
             fonts.lxgw_x12,
             fonts.symbols_only,
         },
-        size = 11,
+        size = 12,
     },
     {
         font_with_fallback = {
@@ -19,7 +19,7 @@ local fontconfigs = {
             fonts.harmony_sans,
             fonts.symbols_only,
         },
-        size = 13,
+        size = 14,
     },
     {
         font_with_fallback = {
@@ -28,7 +28,7 @@ local fontconfigs = {
             fonts.harmony_sans,
             fonts.symbols_only,
         },
-        size = 13,
+        size = 14,
     },
     {
         font_with_fallback = {
@@ -36,7 +36,7 @@ local fontconfigs = {
             fonts.harmony_sans,
             fonts.symbols_only,
         },
-        size = 12,
+        size = 14,
     },
 }
 

@@ -23,8 +23,7 @@ local M = {
         weight = "Regular",
         -- stretch = "Expanded",
         harfbuzz_features = {
-            "calt=0",
-            -- "ss07",
+            "calt=1",
         },
     },
     ibm_plex_mono = { family = "IBM Plex Mono" },
@@ -53,7 +52,7 @@ local M = {
     noto_sans_cjk = { family = "Noto Sans CJK SC", weight = "Regular" },
 
     -- symbols
-    symbols_only = { family = "Symbols Nerd Font" },
+    symbols_only = { family = "Symbols Nerd Font Mono" },
 }
 
 function M.setup(config, fonts)
