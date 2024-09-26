@@ -12,7 +12,7 @@ end
 -- resizing window with shortcuts
 -- the up, down, left, right function take screen as a 6*2 grid
 local window_manager = {
-    previous = { win_title = "", x = 0, y = 0, w = 6, h = 2, timestamp = 0 }
+    previous = { win_title = "", x = 0, y = 0, w = 6, h = 2, timestamp = 0 },
 }
 
 function window_manager.get_prev_layout()
@@ -115,6 +115,12 @@ function window_manager.to_bottom()
     window_manager.set_frame(win, cell)
 end
 
+function window_manager.to_center()
+    local win = hs.window.focusedWindow()
+    local cell = { x = 1, y = 0, w = 4, h = 2 }
+    window_manager.set_frame(win, cell)
+end
+
 function window_manager.setup(opts)
     hs.grid.MARGINX = 0
     hs.grid.MARGINY = 0
@@ -127,6 +133,7 @@ function window_manager.setup(opts)
     hs.hotkey.bind(opts.modifier, "Right", window_manager.to_right)
     hs.hotkey.bind(opts.modifier, "Up", window_manager.to_top)
     hs.hotkey.bind(opts.modifier, "Down", window_manager.to_bottom)
+    hs.hotkey.bind(opts.modifier, "c", window_manager.to_center)
     hs.hotkey.bind(opts.modifier, "g", function()
         local win = hs.window.focusedWindow()
         hs.grid.setGrid({ w = 6, h = 4 }, win:screen())
@@ -137,10 +144,10 @@ end
 -- quick switch app by shortcuts
 local quick_switcher = {
     shortcuts = {
-        { key = "1", app = "WezTerm" },
+        { key = "1", app = "Alacritty" },
         { key = "2", app = "Brave Browser" },
         { key = "3", app = "Obsidian" },
-    }
+    },
 }
 
 function quick_switcher.setup(opt)
@@ -158,6 +165,7 @@ end
 local input_source = {
     SQUIRREL_SOURCE_ID = "im.rime.inputmethod.Squirrel.Hans",
     DVORAK_SOURCE_ID = "com.apple.keylayout.Dvorak",
+    APPLE_US_SOURCE_ID = "com.apple.keylayout.US",
     APPLE_CHINESE_SOURCE_ID = "com.apple.inputmethod.SCIM.ITABC",
 }
 
@@ -170,15 +178,15 @@ end
 
 function input_source.setup(opts)
     if opts.add_shortcut then
-        hs.hotkey.bind({ 'ctrl', 'cmd' }, ".", input_source.copy_source_id)
+        hs.hotkey.bind({ "ctrl", "cmd" }, ".", input_source.copy_source_id)
     end
 
     local app_source = {
-        ["Code"] = input_source.DVORAK_SOURCE_ID,
-        ["Emacs"] = input_source.DVORAK_SOURCE_ID,
-        ["iTerm2"] = input_source.DVORAK_SOURCE_ID,
-        ["Alacritty"] = input_source.DVORAK_SOURCE_ID,
-        ["WezTerm"] = input_source.DVORAK_SOURCE_ID,
+        ["Code"] = input_source.APPLE_US_SOURCE_ID,
+        ["Emacs"] = input_source.APPLE_US_SOURCE_ID,
+        ["iTerm2"] = input_source.APPLE_US_SOURCE_ID,
+        ["Alacritty"] = input_source.APPLE_US_SOURCE_ID,
+        ["WezTerm"] = input_source.APPLE_US_SOURCE_ID,
 
         -- ["WeChat"] = input_source.SQUIRREL_SOURCE_ID,
         -- ["Obsidian"] = input_source.SQUIRREL_SOURCE_ID,
@@ -186,11 +194,9 @@ function input_source.setup(opts)
     }
 
     for app, source_id in pairs(app_source) do
-        hs.window.filter.new(app):subscribe(
-            hs.window.filter.windowFocused,
-            function()
-                hs.keycodes.currentSourceID(source_id)
-            end)
+        hs.window.filter.new(app):subscribe(hs.window.filter.windowFocused, function()
+            hs.keycodes.currentSourceID(source_id)
+        end)
     end
 end
 
@@ -202,7 +208,7 @@ local function auto_reload_config(opt)
 
         if flag then
             hs.reload()
-            Notify('Hammerspoon', 'config reloaded')
+            Notify("Hammerspoon", "config reloaded")
         end
     end
 
@@ -216,21 +222,21 @@ local function main()
     -- for more information, follow the documention
     -- https://www.hammerspoon.org/docs/hs.ipc.html#cliInstall
     if not hs.ipc.cliInstall() then
-        Notify('Hammerspoon', 'fail to instal hs ipc cli')
+        Notify("Hammerspoon", "fail to instal hs ipc cli")
     end
 
     -- register hotkeys to arrange multiple windows
-    window_manager.setup { modifier = { "ctrl", "alt" } }
+    window_manager.setup({ modifier = { "ctrl", "alt" } })
 
     -- quick_switcher.setup { modifier = { "cmd" } }
 
     -- change input method by app
-    input_source.setup { add_shortcut = false }
+    input_source.setup({ add_shortcut = false })
 
     -- auto reload config file
-    auto_reload_config { watch = false }
+    auto_reload_config({ watch = false })
 
-    Notify('Hammerspoon', 'config loaded')
+    Notify("Hammerspoon", "config loaded")
 end
 
 main()
