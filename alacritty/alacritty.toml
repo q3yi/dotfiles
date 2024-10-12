@@ -1,11 +1,28 @@
-live_config_reload = true
+import = ["~/.config/alacritty/themes/themes/tomorrow_night.toml"]
 
-[window]
-padding = {x = 2, y = 2}
-dynamic_padding = true
+[colors]
+draw_bold_text_with_bright_colors = true
 
 [font]
-normal = { family = "EnvyCodeR Nerd Font Mono", style = "Regular"}
-size = 11
-offset = { x = 0, y = 0 }
-builtin_box_drawing = false
+size = 17
+normal = { family = "IosevkaTerm Nerd Font Mono", style = "Regular" }
+italic = { family = "IosevkaTerm Nerd Font Mono", style = "Italic" }
+bold = { family = "IosevkaTerm Nerd Font Mono", style = "Bold" }
+bold_italic = { family = "IosevkaTerm Nerd Font Mono", style = "Bold Italic" }
+builtin_box_drawing = true
+
+[scrolling]
+history = 10000
+multiplier = 1
+
+[selection]
+save_to_clipboard = true
+
+[window]
+decorations = "Buttonless"
+padding = { x = 1, y = 0 }
+dynamic_padding = true
+opacity = 0.80
+blur = true
+# dimensions = { columns = 128, lines = 40 }
+option_as_alt = "OnlyLeft"

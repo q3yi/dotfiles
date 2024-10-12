@@ -228,7 +228,7 @@ local function main()
     -- register hotkeys to arrange multiple windows
     window_manager.setup({ modifier = { "ctrl", "alt" } })
 
-    -- quick_switcher.setup { modifier = { "cmd" } }
+    quick_switcher.setup({ modifier = { "alt" } })
 
     -- change input method by app
     input_source.setup({ add_shortcut = false })
