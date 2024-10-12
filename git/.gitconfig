@@ -1,10 +1,8 @@
 [user]
-	name = Yi Qing
-	email = qingyi.tss@gmail.com
+	name = Qing Yi
+	email = qing.yi@outlook.com
+	signingkey = F0EE6D5C89089BC1
 [init]
 	defaultBranch = main
-[credential]
-	helper = 
-	helper = /usr/local/share/gcm-core/git-credential-manager
-[credential "https://dev.azure.com"]
-	useHttpPath = true
+[commit]
+	gpgsign = true
