@@ -1,8 +1,0 @@
-[user]
-	name = Qing Yi
-	email = qing.yi@outlook.com
-	signingkey = F0EE6D5C89089BC1
-[init]
-	defaultBranch = main
-[commit]
-	gpgsign = true
