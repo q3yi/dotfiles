@@ -112,15 +112,6 @@ if command -v fzf >/dev/null
     fzf --fish | FZF_CTRL_T_COMMAND= source
 end
 
-# Quick theme switch in plasma
-if command -v lookandfeeltool >/dev/null
-    # list all theme with command:
-    # lookandfeeltool --list
-
-    alias lightplasma="lookandfeeltool --a org.kde.breeze.desktop"
-    alias darkplasma="lookandfeeltool --a org.kde.breezedark.desktop"
-end
-
 # setup shell proxies
 proxy shell on
 
