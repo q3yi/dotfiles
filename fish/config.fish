@@ -35,14 +35,16 @@ if test -d $HOME/go
     set -gx GO111MODULE on
     set -gx GOPROXY "https://goproxy.cn"
     set -gx GOSUMDB "sum.golang.org" "https://goproxy.cn/sumdb/sum.golang.org"
+
     if test (uname) != Linux
         # only needed on mac or windows
         alias go4linux="GOOS=linux GOARCH=386 CGO_ENABLED=0 go build"
     end
-end
-if test -d /usr/local/go
-    # go root on linux
-    set -gx PATH /usr/local/go/bin $PATH
+
+    if test -d /usr/local/go
+        # go root on linux
+        set -gx PATH /usr/local/go/bin $PATH
+    end
 end
 
 # rust configuration
@@ -114,6 +116,13 @@ end
 
 # setup shell proxies
 proxy shell on
+
+# test system theme
+if is_dark_mode >/dev/null
+    set -gx DARK_MODE true
+else
+    set -gx DARK_MODE false
+end
 
 # set repos folder for quick jump command `p`
 set -gx REPOS $HOME/.emacs.d/
