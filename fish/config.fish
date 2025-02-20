@@ -117,13 +117,6 @@ end
 # setup shell proxies
 proxy shell on
 
-# test system theme
-if is_dark_mode >/dev/null
-    set -gx DARK_MODE true
-else
-    set -gx DARK_MODE false
-end
-
 # set repos folder for quick jump command `p`
 set -gx REPOS $HOME/.emacs.d/
 set -gx REPOS $REPOS $HOME/repos/
