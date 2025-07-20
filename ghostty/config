@@ -1,0 +1,55 @@
+
+theme = dark:nightfox,light:dayfox
+
+# Latin font
+# font-family = PragmataPro Mono Liga
+# font-family = Pragmasevka
+# font-family = Monego
+font-family = CommitMono Nerd Font Mono
+# font-family = JetBrainsMono Nerd Font Mono
+# font-family = IosevkaTerm Nerd Font Mono 
+
+# CJK font
+# font-family = Noto Sans CJK SC
+font-family = HarmonyOS Sans SC
+# font-family = LXGW WenKai Mono
+
+# font-style = Medium
+font-size = 13
+# font-feature = cv01,cv02,cv07
+
+# adjust-cell-height = +1
+# adjust-cell-width = -1
+
+cursor-invert-fg-bg = true
+
+background-opacity = 0.92
+# background-blur = true
+
+window-padding-balance = true
+window-height = 60
+window-width = 126
+
+# window-decoration = client
+# gtk-titlebar = true
+
+keybind = f1>n=new_tab
+keybind = f1>]=next_tab
+keybind = f1>[=previous_tab
+keybind = f1>c=close_tab
+
+keybind = f1>s=new_split:down 
+keybind = f1>v=new_split:right 
+
+keybind = f1>j=goto_split:down 
+keybind = f1>k=goto_split:up 
+keybind = f1>h=goto_split:left 
+keybind = f1>l=goto_split:right 
+keybind = f1>x=close_surface
+
+keybind = f1>up=resize_split:up,10
+keybind = f1>down=resize_split:down,10
+keybind = f1>left=resize_split:left,10
+keybind = f1>right=resize_split:right,10
+keybind = f1>z=toggle_split_zoom
+

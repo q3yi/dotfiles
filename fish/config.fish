@@ -84,7 +84,7 @@ end
 
 # ocaml
 if test -d $HOME/.opam
-    source /home/max/.opam/opam-init/init.fish >/dev/null 2>/dev/null; or true
+    source $HOME/.opam/opam-init/init.fish >/dev/null 2>/dev/null; or true
 end
 
 # fnm - node version manager
