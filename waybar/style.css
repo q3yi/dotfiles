@@ -1,0 +1,168 @@
+* {
+  /* `otf-font-awesome` is required to be installed for icons */
+  font-family:
+    CommitMono Nerd Font Propo,
+    sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+window#waybar {
+  background-color: transparent;
+  /* background-color: alpha(@theme_bg_color, 0.9); */
+  /* border-bottom: 3px solid @unfocused_borders; */
+  color: @theme_text_color;
+  transition-property: background-color;
+  transition-duration: 0.5s;
+  padding: 0 30px;
+}
+
+window#waybar.hidden {
+  opacity: 0.2;
+}
+
+window#waybar.empty #window {
+  background-color: transparent;
+}
+/* window#waybar.solo { */
+/*     background-color: #FFFFFF; */
+/* } */
+
+#workspaces {
+  padding: 10px;
+  background-color: alpha(@theme_bg_color, 0.9);
+  /* border: 1px solid @borders; */
+  border-radius: 10px;
+}
+
+#workspaces button {
+  padding: 0 10px;
+  color: @theme_text_color;
+  border: none;
+}
+
+#workspaces button:hover {
+  color: @theme_selected_bg_color;
+}
+
+#workspaces button.focused {
+  /* background-color: @theme_selected_fg_color; */
+  color: @theme_selected_fg_color;
+  /* box-shadow: inset 0 -3px #ffffff; */
+}
+
+#workspaces button.urgent {
+  background-color: @error_color;
+}
+
+#custom-applauncher,
+#custom-notification,
+#clock,
+#bluetooth,
+/* #cpu, */
+/* #memory, */
+/* #disk, */
+#network,
+#pulseaudio,
+#tray,
+#idle_inhibitor,
+#keyboard-state,
+#language,
+#window,
+#mpris,
+#user,
+#perf,
+#power-menu {
+  padding: 0 10px;
+  background-color: alpha(@theme_bg_color, 0.9);
+  /* background-color: transparent; */
+  color: @theme_text_color;
+  margin: 4px 4px 0 4px;
+  border-radius: 10px;
+  /* border: 1px solid @borders; */
+}
+
+#workspaces {
+  margin: 4px 4px 0 4px;
+}
+
+/* If workspaces is the leftmost module, omit left margin */
+.modules-left > widget:first-child > #workspaces {
+  /* margin-left: 0; */
+}
+
+/* If workspaces is the rightmost module, omit right margin */
+.modules-right > widget:last-child > #workspaces {
+  margin-right: 0;
+}
+
+#custom-applauncher {
+  /* color: @theme_selected_bg_color; */
+}
+
+#perf {
+  padding: 0;
+}
+
+#perf label {
+  padding: 0 10px;
+}
+
+#perf label:hover {
+  color: @theme_selected_bg_color;
+}
+
+#power-menu {
+  padding: 0;
+}
+
+#power-menu label {
+  padding: 0 10px;
+}
+
+#power-menu label:hover {
+  color: @theme_selected_bg_color;
+}
+
+#custom-poweroff {
+  color: @error_color;
+}
+
+#clock {
+}
+
+@keyframes blink {
+  to {
+    background-color: #ffffff;
+    color: #000000;
+  }
+}
+
+label:focus {
+  background-color: #000000;
+}
+
+#network.disconnected {
+  background-color: @warning_color;
+}
+
+#pulseaudio.muted {
+  color: @warning_color;
+}
+
+#tray {
+  /* background-color: @theme_bg_color; */
+}
+
+#tray > .passive {
+  -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
+  background-color: @warning_color;
+}
+
+#idle_inhibitor.activated {
+  color: @error_color;
+}

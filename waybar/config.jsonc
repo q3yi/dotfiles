@@ -1,0 +1,223 @@
+// -*- mode: jsonc -*-
+{
+    // "layer": "top",
+    "height": 40,
+    "modules-left": [
+        "custom/applauncher",
+        "niri/workspaces",
+        "idle_inhibitor",
+        "mpris"
+    ],
+    "modules-center": [
+        "niri/window"
+    ],
+    "modules-right": [
+        "tray",
+        "group/perf",
+        // "cpu",
+        // "memory",
+        // "disk",
+        "pulseaudio",
+        "network",
+        "bluetooth",
+        "clock",
+        "group/power-menu",
+        "custom/notification"
+    ],
+    "custom/applauncher": {
+        "format": "󰣇",
+        "tooltip": false,
+        "on-click": "rofi -show drun"
+    },
+    "mpris": {
+        "player-icons": {
+            "spotify": "󰓇",
+            "default": "󰝚"
+        },
+        "status-icons": {
+            "playing": "",
+            "paused": "",
+            "stopped": ""
+        },
+        "format": "{status_icon} {dynamic}",
+        "interval": 1,
+        "max-length": 50
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
+    },
+    "custom/notification": {
+        "tooltip": true,
+        "format": "{icon}",
+        "format-icons": {
+            "notification": "󱅫",
+            "none": "󰂜",
+            "dnd-notification": "󰂠",
+            "dnd-none": "󰪓",
+            "inhibited-notification": "󰂛",
+            "inhibited-none": "󰪑",
+            "dnd-inhibited-notification": "󰂛",
+            "dnd-inhibited-none": "󰪑"
+        },
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
+    },
+    "tray": {
+        "spacing": 10
+        // "icons": {
+        //   "blueman": "bluetooth",
+        //   "TelegramDesktop": "$HOME/.local/share/icons/hicolor/16x16/apps/telegram.png"
+        // }
+    },
+    "clock": {
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format": "{:%a %d %b %H:%M}",
+        "calendar": {
+            "mode"          : "month",
+            "weeks-pos"     : "right",
+            "format": {
+                "months":     "<span color='#ffead3'><b>{}</b></span>",
+                "days":       "<span color='#ecc6d9'><b>{}</b></span>",
+                "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
+                "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
+                "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
+            }
+        },
+    },
+    "group/perf": {
+        "orientation": "inherit",
+        "drawer": {
+            "transition-duration": 500,
+            "children-class": "pref-menu-item",
+            "transition-left-to-right": true
+        },
+        "modules": [
+            "cpu",
+            "memory",
+            "disk",
+        ],
+    },
+    "cpu": {
+        "format": " {usage}%",
+        "tooltip": true
+    },
+    "memory": {
+        "format": " {}%"
+    },
+    "disk": {
+        "format": " {specific_free:0.2f} GB",
+        "tooltip": true,
+        "tooltip-format": "{specific_free:0.2f} GB / {specific_total:0.2f} GB ({percentage_free}%)",
+        "interval": 60,
+        "unit": "GB"
+    },
+    "backlight": {
+        // "device": "acpi_video1",
+        "format": "{percent}% {icon}",
+        "format-icons": ["", "", "", "", "", "", "", "", ""]
+    },
+    "pulseaudio": {
+        // "scroll-step": 1, // %, can be a float
+        "format": "{icon} {volume}%",
+        "format-bluetooth": "{icon} {volume}%",
+        "format-bluetooth-muted": "{icon} ",
+        "format-muted": "",
+        "format-source": " {volume}% ",
+        "format-source-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        },
+        "tooltip-format": "{icon} {volume}% {format_source}",
+        // "on-scroll-up": "swayosd-client --output-volume raise",
+        // "on-scroll-down": "swayosd-client --output-volume lower",
+        "on-click": "pavucontrol",
+        "on-click-middle": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+    },
+    "network": {
+        "format-wifi": "{icon} {signalStrength}%",
+        "format-ethernet": "󰈀",
+        "tooltip-format": "{ifname}\nup:   {bandwidthUpBytes}\ndown: {bandwidthDownBytes}",
+        "tooltip-format-wifi": "{ifname} {essid}\nup:   {bandwidthUpBytes}\ndown: {bandwidthDownBytes}",
+        "format-linked": "{ifname} (No IP) 󰲊",
+        "format-disabled": "",
+        "format-disconnected": "󰤮",
+        "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+        // "format-alt": "{ifname}: {ipaddr}",
+        "on-click": "alacritty -T impala -e impala"
+    },
+    "bluetooth": {
+        "format": "󰂯",
+        "format-disabled": "",
+        "format-off": "󰂲",
+        "format-connected": "󰂱",
+        "on-click": "alacritty -T bluetui -e bluetui",
+        "tooltip-format": "Name:   {controller_alias}\nStatus: {status}",
+        "tooltip-format-connected": "Name: {controller_alias}\nDevices:\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "  {device_alias} ({device_battery_percentage}% battery)"
+    },
+    "group/power-menu": {
+        "orientation": "inherit",
+        "drawer": {
+            "transition-duration": 500,
+            "children-class": "power-menu-item",
+            "transition-left-to-right": false,
+        },
+        "modules": [
+            "custom/menu-user",
+            "custom/poweroff",
+            "custom/reboot",
+            "custom/logout",
+            "custom/lock",
+        ]
+    },
+    "custom/menu-user": {
+        "exec": "whoami",
+        "interval": "once",
+        "format": " {}",
+        "tooltip": false
+    },
+    "custom/poweroff": {
+        "format" : "⏻ Halt",
+		"tooltip": false,
+        "on-click": "systemctl poweroff"
+    },
+    "custom/logout": {
+        "format": "󰍃 Logout",
+        "tooltip": false,
+        "on-click": "niri msg action quit -s"
+    },
+    "custom/lock": {
+        "format": " Lock",
+        "tooltip": false,
+        "on-click": "loginctl lock-session"
+    },
+    "custom/reboot": {
+        "format": " Reboot",
+        "tooltip": false,
+        "on-click": "reboot"
+    },
+    "niri/workspaces": {
+        "format": "{icon}",
+        "format-icons": {
+            "default": "",
+            "active": ""
+        }
+    },
+    "niri/window": {
+        // "icon": true
+    }
+}
