@@ -34,7 +34,7 @@ end
 function _proxy_set_shell_env
     set -gx http_proxy "http://$proxy_listen_addr:$proxy_web_port"
     set -gx https_proxy "http://$proxy_listen_addr:$proxy_web_port"
-    set -gx all_proxy "socks5://$proxy_listen_addr:$proxy_sock_port"
+    # set -gx all_proxy "socks5://$proxy_listen_addr:$proxy_sock_port"
     #set -gx no_proxy (echo $proxy_bypass_addrs | sed -e 's/ /,/g')
     set -gx no_proxy (string replace -a ' ' ',' "$proxy_bypass_addrs")
 end

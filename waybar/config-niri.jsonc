@@ -2,19 +2,19 @@
 {
   "include": [
     "~/.config/waybar/modules/widgets.jsonc",
-    "~/.config/waybar/modules/hypr-widgets.jsonc"
+    "~/.config/waybar/modules/niri-widgets.jsonc"
   ],
   // "layer": "top",
   "height": 38,
   "margin": "7 5 0 5",
   "modules-left": [
     "custom/applauncher",
-    "hyprland/workspaces",
+    "niri/workspaces",
     "group/perf",
     "idle_inhibitor",
     "mpris"
   ],
-  "modules-center": ["hyprland/window"],
+  "modules-center": ["niri/window"],
   "modules-right": [
     "tray",
     "pulseaudio",

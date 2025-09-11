@@ -1,0 +1,147 @@
+{
+  "custom/applauncher": {
+    "format": "󰣇",
+    "tooltip": false,
+    "on-click": "rofi -show drun"
+  },
+  "mpris": {
+    "player-icons": {
+      "spotify": "󰓇",
+      "default": "󰝚"
+    },
+    "status-icons": {
+      "playing": "",
+      "paused": "",
+      "stopped": ""
+    },
+    "format": "{status_icon} {dynamic}",
+    "interval": 1,
+    "max-length": 50
+  },
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "",
+      "deactivated": ""
+    }
+  },
+  "custom/notification": {
+    "tooltip": true,
+    "format": "{icon}",
+    "format-icons": {
+      "notification": "󱅫",
+      "none": "󰂜",
+      "dnd-notification": "󰂠",
+      "dnd-none": "󰪓",
+      "inhibited-notification": "󰂛",
+      "inhibited-none": "󰪑",
+      "dnd-inhibited-notification": "󰂛",
+      "dnd-inhibited-none": "󰪑"
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true
+  },
+  "tray": {
+    "spacing": 10
+    // "icons": {
+    //   "blueman": "bluetooth",
+    //   "TelegramDesktop": "$HOME/.local/share/icons/hicolor/16x16/apps/telegram.png"
+    // }
+  },
+  "clock": {
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "format": "{:%a %d %b %H:%M}",
+    "calendar": {
+      "mode": "month",
+      "weeks-pos": "right",
+      "format": {
+        "months": "<span color='#ffead3'><b>{}</b></span>",
+        "days": "<span color='#ecc6d9'><b>{}</b></span>",
+        "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
+        "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+        "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+      }
+    }
+  },
+  "group/perf": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 500,
+      "children-class": "pref-menu-item",
+      "transition-left-to-right": true
+    },
+    "modules": ["cpu", "memory", "disk"]
+  },
+  "cpu": {
+    "format": " {usage}%",
+    "tooltip": true,
+    "on-click": "alacritty -T btop -e btop"
+  },
+  "memory": {
+    "format": " {}%"
+  },
+  "disk": {
+    "format": " {specific_free:0.2f} GB",
+    "tooltip": true,
+    "tooltip-format": "{specific_free:0.2f} GB / {specific_total:0.2f} GB ({percentage_free}%)",
+    "interval": 60,
+    "unit": "GB"
+  },
+  "backlight": {
+    "format": "{percent}% {icon}",
+    "format-icons": ["", "", "", "", "", "", "", "", ""]
+  },
+  "group/control-menu": {
+    "orientation": "inherit",
+    "modules": ["pulseaudio", "network", "bluetooth"]
+  },
+  "pulseaudio": {
+    // "scroll-step": 1, // %, can be a float
+    "format": "{icon} {volume}%",
+    "format-bluetooth": "{icon} {volume}%",
+    "format-bluetooth-muted": "{icon} ",
+    "format-muted": "",
+    "format-source": " {volume}% ",
+    "format-source-muted": "",
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["", "", ""]
+    },
+    "tooltip-format": "{icon} {volume}% {format_source}",
+    "on-scroll-up": "fish -c 'volumectl up 1%'",
+    "on-scroll-down": "fish -c 'volumectl down 1%'",
+    "on-click": "pavucontrol",
+    "on-click-middle": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+  },
+  "network": {
+    "format-wifi": "{icon} {signalStrength}%",
+    "format-ethernet": "󰈀",
+    "tooltip-format": "{ifname}\nup:   {bandwidthUpBytes}\ndown: {bandwidthDownBytes}",
+    "tooltip-format-wifi": "{ifname} {essid}\nup:   {bandwidthUpBytes}\ndown: {bandwidthDownBytes}",
+    "format-linked": "{ifname} (No IP) 󰲊",
+    "format-disabled": "",
+    "format-disconnected": "󰤮",
+    "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+    // "format-alt": "{ifname}: {ipaddr}",
+    "on-click": "alacritty -T impala -e impala"
+  },
+  "bluetooth": {
+    "format": "󰂯 on",
+    "format-disabled": "",
+    "format-off": "󰂲 off",
+    "format-connected": "󰂱 {num_connections}",
+    "on-click": "alacritty -T bluetui -e bluetui",
+    "tooltip-format": "Name:   {controller_alias}\nStatus: {status}",
+    "tooltip-format-connected": "Name: {controller_alias}\nDevices:\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "  {device_alias} ({device_battery_percentage}% battery)"
+  }
+}

@@ -1,0 +1,19 @@
+@define-color background      #191724; /* base */
+@define-color surface         #1f1d2e;
+@define-color overlay         #26233a;
+
+@define-color muted           #6e6a86;
+@define-color subtle          #908caa;
+@define-color text            #e0def4;
+
+@define-color danger          #eb6f92; /* love */
+@define-color warning         #f6c177; /* gold */
+@define-color info            #9ccfd8; /* foam */
+
+@define-color rose            #ebbcba;
+@define-color pine            #31748f;
+@define-color iris            #c4a7e7;
+
+@define-color highlightLow    #21202e;
+@define-color hovered         #403d52; /* highlightMed */
+@define-color borders         #524f67; /* highlightHigh */
