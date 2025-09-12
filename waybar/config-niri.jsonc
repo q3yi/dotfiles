@@ -12,6 +12,7 @@
     "niri/workspaces",
     "group/perf",
     "idle_inhibitor",
+    "custom/wlsunset",
     "mpris"
   ],
   "modules-center": ["niri/window"],

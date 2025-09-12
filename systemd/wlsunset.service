@@ -1,0 +1,8 @@
+[Unit]
+PartOf=graphical-session.target
+After=graphical-session.target
+Requisite=graphical-session.target
+
+[Service]
+ExecStart=/usr/sbin/wlsunset -l 38.82 -L 103.72 -t 5500 
+Restart=on-failure

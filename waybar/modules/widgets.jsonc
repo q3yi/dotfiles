@@ -143,5 +143,18 @@
     "tooltip-format": "Name:   {controller_alias}\nStatus: {status}",
     "tooltip-format-connected": "Name: {controller_alias}\nDevices:\n{device_enumerate}",
     "tooltip-format-enumerate-connected": "  {device_alias} ({device_battery_percentage}% battery)"
+  },
+  "custom/wlsunset": {
+    "interval": "once",
+    "exec": "fish -c wlsunsetctl",
+    "on-click": "fish -c 'wlsunsetctl toggle'",
+    "signal": 1, // SIGRTMIN+1 or 35
+    "return-type": "json",
+    "format": "{icon}",
+    "tooltip-format": "wlsunset: {alt}",
+    "format-icons": {
+      "off": "",
+      "on": ""
+    }
   }
 }
