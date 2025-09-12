@@ -23,27 +23,9 @@
     "format-icons": {
       "activated": "",
       "deactivated": ""
-    }
-  },
-  "custom/notification": {
-    "tooltip": true,
-    "format": "{icon}",
-    "format-icons": {
-      "notification": "󱅫",
-      "none": "󰂜",
-      "dnd-notification": "󰂠",
-      "dnd-none": "󰪓",
-      "inhibited-notification": "󰂛",
-      "inhibited-none": "󰪑",
-      "dnd-inhibited-notification": "󰂛",
-      "dnd-inhibited-none": "󰪑"
     },
-    "return-type": "json",
-    "exec-if": "which swaync-client",
-    "exec": "swaync-client -swb",
-    "on-click": "swaync-client -t -sw",
-    "on-click-right": "swaync-client -d -sw",
-    "escape": true
+    "tooltip-format-activated": "screen wouldn't lock",
+    "tooltip-format-deactivated": "screen will lock"
   },
   "tray": {
     "spacing": 10
@@ -79,7 +61,7 @@
   "cpu": {
     "format": " {usage}%",
     "tooltip": true,
-    "on-click": "alacritty -T btop -e btop"
+    "on-click": "foot -a btop btop"
   },
   "memory": {
     "format": " {}%"
@@ -132,14 +114,14 @@
     "format-disconnected": "󰤮",
     "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
     // "format-alt": "{ifname}: {ipaddr}",
-    "on-click": "alacritty -T impala -e impala"
+    "on-click": "foot -a impala impala"
   },
   "bluetooth": {
     "format": "󰂯 on",
     "format-disabled": "",
     "format-off": "󰂲 off",
     "format-connected": "󰂱 {num_connections}",
-    "on-click": "alacritty -T bluetui -e bluetui",
+    "on-click": "foot -a bluetui bluetui",
     "tooltip-format": "Name:   {controller_alias}\nStatus: {status}",
     "tooltip-format-connected": "Name: {controller_alias}\nDevices:\n{device_enumerate}",
     "tooltip-format-enumerate-connected": "  {device_alias} ({device_battery_percentage}% battery)"

@@ -37,6 +37,7 @@ window#waybar {
 }
 
 #workspaces > button:first-child:hover {
+  background-color: @hovered;
   border-radius: 11px 0 0 11px;
 }
 
@@ -45,6 +46,7 @@ window#waybar {
 }
 
 #workspaces > button:last-child:hover {
+  background-color: @hovered;
   border-radius: 0 11px 11px 0;
 }
 

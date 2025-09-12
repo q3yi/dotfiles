@@ -105,6 +105,11 @@ layout {
         offset x=0 y=5
         color "#0007"
     }
+
+    tab-indicator {
+        width 6
+        place-within-column
+    }
 }
 
 // Add lines like this to spawn processes at startup.
@@ -116,6 +121,10 @@ spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 prefer-no-csd
 
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+environment {
+    ELECTRON_OZONE_PLATFORM_HINT "auto"
+}
 
 // Animation settings.
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Animations
@@ -162,18 +171,13 @@ window-rule {
     match app-id=r#"io.github.celluloid_player.Celluloid"#
     match app-id=r#"org.kde.haruna"#
 
-    match app-id=r#"Alacritty"# title="^nmtui$"
-    match app-id=r#"Alacritty"# title="^bluetui$"
-    match app-id=r#"Alacritty"# title="^btop$"
-
-    open-floating true
-}
-
-window-rule {
+    match app-id=r#"impala"#
+    match app-id=r#"nmtui"#
+    match app-id=r#"bluetui"#
+    match app-id=r#"btop"#
     match app-id=r#"pavucontrol"#
-    match app-id=r#"Alacritty"# title="^impala$"
+
     open-floating true
-    min-height 700
 }
 
 // Example: block out two password managers from screen capture.
