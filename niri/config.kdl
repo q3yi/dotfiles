@@ -116,6 +116,7 @@ layout {
 // Note that running niri as a session supports xdg-desktop-autostart,
 
 // spawn-at-startup "mako" // start with systemed
+spawn-at-startup "udiskie"
 spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 
 prefer-no-csd
@@ -216,13 +217,13 @@ binds {
     // Mod-Shift-/, which is usually the same as Mod-?,
     Mod+Shift+Slash { show-hotkey-overlay; }
 
-    Mod+T hotkey-overlay-title="Open a Terminal: ghostty" { spawn "ghostty"; }
+    Mod+Return hotkey-overlay-title="Open a Terminal: ghostty" { spawn "ghostty"; }
     Mod+D hotkey-overlay-title="Run an Application: rofi" { spawn "rofi" "-show" "drun"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: hyprlock" { spawn "hyprlock"; }
     Mod+E { spawn "nautilus"; }
 
     // Logitech emoji fn key
-    Ctrl+Alt+Super+Shift+Space repeat=false { spawn "rofi" "-show" "emoji"; }
+    Ctrl+Alt+Super+Shift+Space repeat=false { spawn "rofi" "-show" "emoji" "-emoji-mode" "copy"; }
 
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument in the end.
