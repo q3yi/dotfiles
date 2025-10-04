@@ -26,6 +26,9 @@ if test (uname) = Darwin
     set -gx HOMEBREW_BOTTLE_DOMAIN https://mirrors.ustc.edu.cn/homebrew-bottles
     # use gnu coreutils instead `ls' in macOS which is origin from BSD
     set -gx PATH /usr/local/opt/coreutils/libexec/gnubin $PATH
+
+    set HOMEBREW_NO_INSTALL_CLEANUP 1
+    set HOMEBREW_NO_ENV_HINTS 1
 end
 
 # golang configuration
