@@ -225,6 +225,8 @@ binds {
     // Logitech emoji fn key
     Ctrl+Alt+Super+Shift+Space repeat=false { spawn "rofi" "-show" "emoji" "-emoji-mode" "copy"; }
 
+    Mod+Shift+C { spawn "rofi" "-show" "calc" "-no-show-match" "-no-sort"; }
+
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument in the end.
     // Mod+T { spawn "bash" "-c" "notify-send hello && exec alacritty"; }
