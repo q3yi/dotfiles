@@ -9,21 +9,20 @@
 }
 
 window#waybar {
-  /* background-color: alpha(@background, 0.9); */
-  background-color: transparent;
+  background-color: alpha(@background, 0.9);
+  /* background-color: transparent; */
   color: @text;
   transition-property: background-color;
   transition-duration: 0.5s;
-  border-radius: 12px;
+  /* border-radius: 12px; */
   /* border: 2px dotted @borders; */
 }
 
 #workspaces {
-  background-color: alpha(@background, 0.9);
-  /* background-color: transparent; */
-  border: 3px solid @borders;
-  border-radius: 12px;
-  margin: 0 5px;
+  background-color: transparent;
+  /* border: 3px solid @borders; */
+  /* border-radius: 12px; */
+  /* margin: 0 5px; */
 }
 
 #workspaces button {
@@ -33,21 +32,21 @@ window#waybar {
 }
 
 #workspaces > button:first-child {
-  padding-left: 10px;
+  padding-left: 5px;
 }
 
 #workspaces > button:first-child:hover {
   background-color: @hovered;
-  border-radius: 11px 0 0 11px;
+  /* border-radius: 11px 0 0 11px; */
 }
 
 #workspaces > button:last-child {
-  padding-right: 10px;
+  padding-right: 5px;
 }
 
 #workspaces > button:last-child:hover {
   background-color: @hovered;
-  border-radius: 0 11px 11px 0;
+  /* border-radius: 0 11px 11px 0; */
 }
 
 #workspaces button:hover {
@@ -81,11 +80,12 @@ window#waybar {
 #control-menu,
 #power-menu {
   padding: 0 10px;
-  background-color: alpha(@background, 0.9);
+  /* background-color: alpha(@background, 0.9); */
+  background-color: transparent;
   color: @text;
-  margin: 0 5px;
-  border-radius: 12px;
-  border: 3px solid @borders;
+  /* margin: 0 2px; */
+  /* border-radius: 12px; */
+  /* border: 3px solid @borders; */
 }
 
 #perf,
@@ -95,14 +95,14 @@ window#waybar {
 
 #perf > widget:first-child > label:hover,
 #power-menu widget:first-child > label:hover {
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
+  /* border-top-left-radius: 10px; */
+  /* border-bottom-left-radius: 10px; */
 }
 
 #perf widget:last-child > label:hover,
 #power-menu > widget:last-child > label:hover {
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
+  /* border-top-right-radius: 10px; */
+  /* border-bottom-right-radius: 10px; */
 }
 
 #perf label,

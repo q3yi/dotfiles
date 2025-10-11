@@ -1,27 +1,22 @@
 // -*- mode: jsonc -*-
 {
-  "include": [
-    "~/.config/waybar/modules/widgets.jsonc",
-    "~/.config/waybar/modules/hypr-widgets.jsonc"
-  ],
+  "include": ["~/.config/waybar/modules/widgets.jsonc"],
   // "layer": "top",
-  "height": 38,
-  "margin": "7 5 0 5",
+  "height": 30,
   "modules-left": [
     "custom/applauncher",
-    "hyprland/workspaces",
+    "niri/workspaces",
     "group/perf",
-    "idle_inhibitor",
-    "custom/wlsunset",
     "mpris"
   ],
-  "modules-center": ["hyprland/window"],
+  "modules-center": ["clock"],
   "modules-right": [
     "tray",
+    "idle_inhibitor",
+    "custom/wlsunset",
     "pulseaudio",
     "network",
     "bluetooth",
-    "clock",
     "group/power-menu"
   ]
 }

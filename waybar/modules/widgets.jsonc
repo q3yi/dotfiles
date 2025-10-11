@@ -138,5 +138,60 @@
       "off": "",
       "on": ""
     }
+  },
+  "niri/workspaces": {
+    "format": "{icon}",
+    "format-icons": {
+      "default": "",
+      "active": ""
+    }
+  },
+  "niri/window": {
+    // "icon":  true
+    "rewrite": {
+      "(.*) - Zen Browser": "🌎 $1",
+      "(.*) - zsh": "> [$1]"
+    }
+  },
+  "group/power-menu": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 500,
+      "children-class": "power-menu-item",
+      "transition-left-to-right": false
+    },
+    "modules": [
+      "custom/menu-user",
+      "custom/poweroff",
+      "custom/reboot",
+      "custom/logout",
+      "custom/lock"
+    ]
+  },
+  "custom/menu-user": {
+    "exec": "whoami",
+    "interval": "once",
+    "format": " {}",
+    "tooltip": false
+  },
+  "custom/poweroff": {
+    "format": "⏻ Halt",
+    "tooltip": false,
+    "on-click": "systemctl poweroff"
+  },
+  "custom/logout": {
+    "format": "󰍃 Logout",
+    "tooltip": false,
+    "on-click": "niri msg action quit -s"
+  },
+  "custom/lock": {
+    "format": " Lock",
+    "tooltip": false,
+    "on-click": "loginctl lock-session"
+  },
+  "custom/reboot": {
+    "format": " Reboot",
+    "tooltip": false,
+    "on-click": "reboot"
   }
 }
