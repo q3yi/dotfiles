@@ -34,64 +34,54 @@ end
 # golang configuration
 if test -d $HOME/go
     set -gx GOPATH $HOME/go
-    set -gx PATH $GOPATH/bin $PATH
     set -gx GO111MODULE on
     set -gx GOPROXY "https://goproxy.cn"
     set -gx GOSUMDB "sum.golang.org" "https://goproxy.cn/sumdb/sum.golang.org"
 
-    if test (uname) != Linux
-        # only needed on mac or windows
-        alias go4linux="GOOS=linux GOARCH=386 CGO_ENABLED=0 go build"
-    end
-
-    if test -d /usr/local/go
-        # go root on linux
-        set -gx PATH /usr/local/go/bin $PATH
-    end
+    fish_add_path $GOPATH/bin
 end
 
 # rust configuration
 if test -d $HOME/.cargo
-    set -gx PATH $HOME/.cargo/bin $PATH
     set -gx RUSTUP_UPDATE_ROOT https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup
     set -gx RUSTUP_DIST_SERVER https://mirrors.tuna.tsinghua.edu.cn/rustup
+
+    fish_add_path $HOME/.cargo/bin
 end
 
 # haskell configuration
 if test -d $HOME/.ghcup
-    set -gx PATH $HOME/.ghcup/bin $PATH
-    set -gx PATH $HOME/.cabal/bin $PATH
+    fish_add_path $HOME/.ghcup/bin $HOME/.cabal/bin
 end
 
 # foundry for solidity
 if test -d $HOME/.foundry
-    set -gx PATH $HOME/.foundry/bin $PATH
+    fish_add_path $HOME/.foundry/bin
 end
 
 # flutter
 if test -d $HOME/flutter
-    set -gx PATH $HOME/flutter/bin $PATH
+    fish_add_path $HOME/flutter/bin
 end
 
 # dotnet configuration
 if test -d $HOME/.dotnet
-    set -gx PATH $PATH $HOME/.dotnet
-    set -gx PATH $PATH $HOME/.dotnet/tools
     set -gx DOTNET_ROOT $HOME/.dotnet
+    fish_add_path $HOME/.dotnet $HOME/.dotnet/tools
 end
 
 # zig configuration
 if test -d $HOME/zig
-    set -gx PATH $PATH $HOME/zig/current
+    fish_add_path $HOME/zig/current
 end
 
 # ocaml
-if test -d $HOME/.opam
+if test -d $HOME/.opam; and test -z "$OPAM_SWITCH_PREFIX"
     source $HOME/.opam/opam-init/init.fish >/dev/null 2>/dev/null; or true
 end
 
 # fnm - node version manager
-if command -v fnm >/dev/null
+if command -v fnm >/dev/null; and test -z "$FNM_MULTISHELL_PATH"
     fnm env | source
 end
 
@@ -109,13 +99,11 @@ end
 
 # fzf
 if command -v fzf >/dev/null
-    fzf --fish | FZF_CTRL_T_COMMAND= source
+    fzf --fish | source
 end
 
 # setup shell proxies
 proxy shell on
 
 # set repos folder for quick jump command `p`
-set -gx REPOS $HOME/.emacs.d/
-set -gx REPOS $REPOS $HOME/repos/
-set -gx REPOS $REPOS $HOME/.config/
+set -gx REPOS $HOME/.emacs.d/ $HOME/repos/ $HOME/.config/
