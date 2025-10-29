@@ -21,11 +21,26 @@
   "idle_inhibitor": {
     "format": "{icon}",
     "format-icons": {
-      "activated": "",
-      "deactivated": ""
+      "activated": "󰅶",
+      "deactivated": "󰾪"
     },
     "tooltip-format-activated": "screen wouldn't lock",
     "tooltip-format-deactivated": "screen will lock"
+  },
+  "group/autohide_tray": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 500,
+      "children-class": "tray-menu-item",
+      "transition-left-to-right": false,
+      "click-to-reveal": true
+    },
+    "modules": ["custom/tray_icon", "tray"]
+  },
+  "custom/tray_icon": {
+    "format": "",
+    "tooltip": false
+    // "on-click": "rofi -show drun"
   },
   "tray": {
     "spacing": 10
@@ -135,7 +150,7 @@
     "format": "{icon}",
     "tooltip-format": "wlsunset: {alt}",
     "format-icons": {
-      "off": "",
+      "off": "󰖨",
       "on": ""
     }
   },

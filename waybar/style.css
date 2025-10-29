@@ -69,13 +69,13 @@ window#waybar {
 #bluetooth,
 #network,
 #pulseaudio,
-#tray,
 #idle_inhibitor,
 #keyboard-state,
 #language,
 #window,
 #mpris,
 #user,
+#autohide_tray,
 #perf,
 #control-menu,
 #power-menu {
@@ -85,9 +85,10 @@ window#waybar {
   color: @text;
   /* margin: 0 2px; */
   /* border-radius: 12px; */
-  /* border: 3px solid @borders; */
+  /* border-left: 1px solid @borders; */
 }
 
+#autohide_tray,
 #perf,
 #power-menu {
   padding: 0;
@@ -105,6 +106,7 @@ window#waybar {
   /* border-bottom-right-radius: 10px; */
 }
 
+#autohide_tray label,
 #perf label,
 #power-menu label {
   padding: 0 10px;

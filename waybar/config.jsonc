@@ -11,12 +11,12 @@
   ],
   "modules-center": ["clock"],
   "modules-right": [
-    "tray",
-    "idle_inhibitor",
+    "group/autohide_tray",
     "custom/wlsunset",
+    "idle_inhibitor",
+    "bluetooth",
     "pulseaudio",
     "network",
-    "bluetooth",
     "group/power-menu"
   ]
 }
