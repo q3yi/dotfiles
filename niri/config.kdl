@@ -115,7 +115,7 @@ layout {
 // Add lines like this to spawn processes at startup.
 // Note that running niri as a session supports xdg-desktop-autostart,
 
-// spawn-at-startup "mako" // start with systemed
+spawn-at-startup "dms" "run"
 spawn-at-startup "udiskie"
 spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 
@@ -125,6 +125,11 @@ screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
 environment {
     ELECTRON_OZONE_PLATFORM_HINT "auto"
+    // QT_QPA_PLATFORM "wayland"
+    // DISPLAY null
+    QT_QPA_PLATFORMTHEME "gtk3"
+    QT_QPA_PLATFORMTHEME_QT6 "gtk3"
+    XMODIFIERS "@im=fcitx"
 }
 
 // Animation settings.
@@ -235,11 +240,14 @@ binds {
     XF86AudioPlay        allow-when-locked=true { spawn "playerctl" "play-pause"; }
     // XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.02+"; }
     // XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.02-"; }
-    XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
-    XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+    // XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+    // XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
 
-    XF86AudioRaiseVolume allow-when-locked=true { spawn "fish" "-c" "volumectl up 2%"; }
-    XF86AudioLowerVolume allow-when-locked=true { spawn "fish" "-c" "volumectl down 2%"; }
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "dms" "ipc" "call" "audio" "increment" "2"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "dms" "ipc" "call" "audio" "decrement" "2"; }
+    XF86AudioMute allow-when-locked=true { spawn "dms" "ipc" "call" "audio" "mute"; }
+    XF86AudioMicMute allow-when-locked=true { spawn "dms" "ipc" "call" "audio" "micmute"; }
+
     // Open/close the Overview: a zoomed-out view of workspaces and windows.
     // You can also move the mouse into the top-left hot corner,
     // or do a four-finger swipe up on a touchpad.
@@ -377,3 +385,8 @@ hotkey-overlay {
     skip-at-startup
 }
 
+// dms configs
+include "dms/layout.kdl"
+include "dms/colors.kdl"
+include "dms/wpblur.kdl"
+include "dms/alttab.kdl"
