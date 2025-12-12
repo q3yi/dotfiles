@@ -7,7 +7,7 @@
     "custom/applauncher",
     "niri/workspaces",
     "group/perf",
-    "mpris"
+    "mpris",
   ],
   "modules-center": ["clock"],
   "modules-right": [
@@ -17,6 +17,6 @@
     "bluetooth",
     "pulseaudio",
     "network",
-    "group/power-menu"
-  ]
+    "group/power-menu",
+  ],
 }
