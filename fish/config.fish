@@ -73,6 +73,7 @@ end
 # zig configuration
 if test -d $HOME/zig
     fish_add_path $HOME/zig/current
+    fish_add_path $HOME/zig/bin
 end
 
 # ocaml
