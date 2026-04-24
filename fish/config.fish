@@ -81,11 +81,6 @@ if test -d $HOME/.opam; and test -z "$OPAM_SWITCH_PREFIX"
     source $HOME/.opam/opam-init/init.fish >/dev/null 2>/dev/null; or true
 end
 
-# fnm - node version manager
-if command -v fnm >/dev/null; and test -z "$FNM_MULTISHELL_PATH"
-    fnm env | source
-end
-
 # starship
 if command -v starship >/dev/null
     starship init fish | source
@@ -103,8 +98,16 @@ if command -v fzf >/dev/null
     fzf --fish | source
 end
 
+# mise language version manager
+if command -v mise >/dev/null; and test -z "$__MISE_SESSION"
+    mise hook-env -s fish | source
+end
+
 # setup shell proxies
 proxy shell on
 
 # set repos folder for quick jump command `p`
 set -gx REPOS $HOME/.emacs.d/ $HOME/repos/ $HOME/.config/
+
+# opencode
+fish_add_path /Users/qingyi/.opencode/bin
