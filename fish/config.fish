@@ -98,7 +98,7 @@ if command -v fzf >/dev/null
 end
 
 # mise language version manager
-if command -v mise >/dev/null; and test -z "$__MISE_SESSION"
+if command -v mise >/dev/null
     mise hook-env -s fish | source
 end
 
