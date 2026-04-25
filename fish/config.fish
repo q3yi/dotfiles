@@ -43,8 +43,8 @@ end
 
 # rust configuration
 if test -d $HOME/.cargo
-    set -gx RUSTUP_UPDATE_ROOT https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup
-    set -gx RUSTUP_DIST_SERVER https://mirrors.tuna.tsinghua.edu.cn/rustup
+    # set -gx RUSTUP_UPDATE_ROOT https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup
+    # set -gx RUSTUP_DIST_SERVER https://mirrors.tuna.tsinghua.edu.cn/rustup
 
     fish_add_path $HOME/.cargo/bin
 end
@@ -72,7 +72,6 @@ end
 
 # zig configuration
 if test -d $HOME/zig
-    fish_add_path $HOME/zig/current
     fish_add_path $HOME/zig/bin
 end
 
@@ -109,5 +108,4 @@ proxy shell on
 # set repos folder for quick jump command `p`
 set -gx REPOS $HOME/.emacs.d/ $HOME/repos/ $HOME/.config/
 
-# opencode
-fish_add_path /Users/qingyi/.opencode/bin
+bind \cz 'fg 2>/dev/null; commandline -f repaint'

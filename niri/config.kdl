@@ -54,9 +54,10 @@ input {
 
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Outputs
 output "HDMI-A-1" {
-    mode "2560x1440@143.912"
+    mode "2560x1440@143.999"
     scale 1
     transform "normal"
+    // variable-refresh-rate
 }
 
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Layout
@@ -168,6 +169,7 @@ window-rule {
 
 window-rule {
     match app-id=r#"zen$"#
+    match app-id=r#"helium$"#
     default-column-width { proportion 0.66667; }
 }
 
@@ -222,7 +224,7 @@ binds {
     // Mod-Shift-/, which is usually the same as Mod-?,
     Mod+Shift+Slash { show-hotkey-overlay; }
 
-    Mod+Return hotkey-overlay-title="Open a Terminal: ghostty" { spawn "ghostty"; }
+    Mod+Return hotkey-overlay-title="Open a Terminal: ghostty" { spawn "ghostty" "+new-window"; }
     Mod+D hotkey-overlay-title="Run an Application: rofi" { spawn "rofi" "-show" "drun"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: hyprlock" { spawn "hyprlock"; }
     Mod+E { spawn "nautilus"; }
