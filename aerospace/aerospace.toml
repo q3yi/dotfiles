@@ -144,3 +144,23 @@ run = 'move-node-to-workspace 9'
 [[on-window-detected]]
 if.app-id = 'com.spotify.client'
 run = 'move-node-to-workspace 9'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.finder'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.Preview'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'org.keepassxc.keepassxc'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.aone.keka'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = "com.mitchellh.ghostty"
+run = ["layout floating", "move-node-to-workspace 2"]
