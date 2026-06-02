@@ -87,7 +87,7 @@ end
 
 local function main()
     -- install ipc cli
-    -- for more information, follow the documention
+    -- for more information, follow the documentation
     -- https://www.hammerspoon.org/docs/hs.ipc.html#cliInstall
     local ipc = require("hs.ipc")
     if not ipc.cliInstall() then

@@ -7,15 +7,15 @@ local function detect_system()
         Windows = "window",
     }
 
-    local kernal = "Windows"
+    local kernel = "Windows"
 
     -- Unix, Linux variants
     local r, _ = assert(io.popen("uname -s 2>/dev/null", "r"))
     if r then
-        kernal = r:read()
+        kernel = r:read()
     end
 
-    return kernel_to_sys[kernal]
+    return kernel_to_sys[kernel]
 end
 
 local wezterm = require("wezterm")
